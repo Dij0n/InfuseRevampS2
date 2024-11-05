@@ -1,0 +1,4 @@
+name: InfuseRevampS2
+version: '1.0'
+main: dijon.infuseRevampS2.InfuseRevampS2
+api-version: '1.21'
