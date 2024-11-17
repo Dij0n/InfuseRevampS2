@@ -1,11 +1,10 @@
-package dijon.infuseRevampS2.data;
+package dijon.infuseRevampS2.Data;
 
 import dijon.infuseRevampS2.InfuseRevampS2;
-import dijon.infuseRevampS2.effects.InfuseEffect;
+import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;

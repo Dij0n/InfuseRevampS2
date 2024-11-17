@@ -1,7 +1,7 @@
-package dijon.infuseRevampS2.data;
+package dijon.infuseRevampS2.Data;
 
 import dijon.infuseRevampS2.InfuseRevampS2;
-import dijon.infuseRevampS2.effects.InfuseEffect;
+import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +33,7 @@ public class JoinDataListener implements Listener {
         Bukkit.getLogger().info("Saving");
         PlayerFileManager.saveData();
         PlayerFileManager.loadData();
+
     }
 
     @EventHandler

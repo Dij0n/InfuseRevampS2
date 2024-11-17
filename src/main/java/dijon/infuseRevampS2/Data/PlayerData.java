@@ -1,6 +1,6 @@
-package dijon.infuseRevampS2.data;
+package dijon.infuseRevampS2.Data;
 
-import dijon.infuseRevampS2.effects.InfuseEffect;
+import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
