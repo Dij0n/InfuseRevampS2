@@ -1,4 +1,4 @@
-package dijon.infuseRevampS2.Commands;
+package dijon.infuseRevampS2.Commands.OP;
 
 import dijon.infuseRevampS2.Data.PlayerFileManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;

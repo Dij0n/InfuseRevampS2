@@ -1,4 +1,4 @@
-package dijon.infuseRevampS2.Commands;
+package dijon.infuseRevampS2.Commands.OP;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

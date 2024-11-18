@@ -1,10 +1,19 @@
 package dijon.infuseRevampS2.EffectActions.Actions;
 
+import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class EnderAction extends InfuseAction {
+
+    public EnderAction(){
+        super(InfuseEffect.ENDER);
+    }
 
     @Override
     protected void onEquip(Player player) {
@@ -27,12 +36,22 @@ public class EnderAction extends InfuseAction {
     }
 
     @Override
-    protected BukkitRunnable createStandardInterim() {
-        return null;
+    protected BukkitRunnable createStandardInterim(Player player) {
+        return new BukkitRunnable() {
+            @Override
+            public void run() {
+                player.sendMessage("ender normal :)");
+            }
+        };
     }
 
     @Override
-    protected BukkitRunnable createSparkedInterim() {
-        return null;
+    protected BukkitRunnable createSparkedInterim(Player player) {
+        return new BukkitRunnable() {
+            @Override
+            public void run() {
+                player.sendMessage("ender spark! >:)");
+            }
+        };
     }
 }

@@ -23,6 +23,8 @@ public class JoinDataListener implements Listener {
         Bukkit.getLogger().info("Player joined");
 
         if(PlayerDataManager.isPlayerLoaded(uuid)){
+            PlayerDataManager.getPrimary(uuid).getAction().runReJoinTask(event.getPlayer());
+            PlayerDataManager.getSecondary(uuid).getAction().runReJoinTask(event.getPlayer());
             return;
         }
 
@@ -38,6 +40,12 @@ public class JoinDataListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
+        UUID uuid = event.getPlayer().getUniqueId();
+
+        PlayerDataManager.getPrimary(uuid).getAction().runLeaveTask(event.getPlayer());
+        PlayerDataManager.setPrimaryActive(uuid, false);
+        PlayerDataManager.getSecondary(uuid).getAction().runLeaveTask(event.getPlayer());
+        PlayerDataManager.setSecondaryActive(uuid, false);
         PlayerFileManager.saveData();
     }
 

@@ -1,10 +1,15 @@
 package dijon.infuseRevampS2.EffectActions.Actions;
 
+import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class HeartAction extends InfuseAction {
+
+    public HeartAction(){
+        super(InfuseEffect.HEART);
+    }
 
     @Override
     protected void onEquip(Player player) {
@@ -27,12 +32,12 @@ public class HeartAction extends InfuseAction {
     }
 
     @Override
-    protected BukkitRunnable createStandardInterim() {
+    protected BukkitRunnable createStandardInterim(Player player) {
         return null;
     }
 
     @Override
-    protected BukkitRunnable createSparkedInterim() {
+    protected BukkitRunnable createSparkedInterim(Player player) {
         return null;
     }
 }

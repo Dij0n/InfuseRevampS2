@@ -17,7 +17,6 @@ public class PlayerDataManager {
     }
 
     public static void addPlayer(PlayerData player){
-        Bukkit.getLogger().info("Initialized player: " + player.getUuid());
         masterPlayerDataList.put(player.getUuid(), player);
     }
 
@@ -42,6 +41,13 @@ public class PlayerDataManager {
     public static void setSecondary(UUID uuid, InfuseEffect infuseEffect){
         masterPlayerDataList.get(uuid).setSecondary(infuseEffect);
     }
+    public static void setPrimaryActive(UUID uuid, boolean active){
+        masterPlayerDataList.get(uuid).setPrimaryActivated(active);
+    }
+    public static void setSecondaryActive(UUID uuid, boolean active){
+        masterPlayerDataList.get(uuid).setSecondaryActivated(active);
+    }
+
     public static void setLastPrimaryActivation(UUID uuid, long time){
         masterPlayerDataList.get(uuid).setLastPrimaryActivation(time);
     }
@@ -56,6 +62,18 @@ public class PlayerDataManager {
     }
 
     //COOLDOWNS
+    public static boolean isPrimarySparkDurationOver(UUID uuid) {
+        return masterPlayerDataList.get(uuid).isPrimaryDurationOver();
+    }
+    public static boolean isSecondarySparkDurationOver(UUID uuid) {
+        return masterPlayerDataList.get(uuid).isSecondaryDurationOver();
+    }
+    public static long getPrimarySparkDurationLeft(UUID uuid){
+        return masterPlayerDataList.get(uuid).getPrimaryDurationLeft();
+    }
+    public static long getSecondarySparkDurationLeft(UUID uuid){
+        return masterPlayerDataList.get(uuid).getSecondaryDurationLeft();
+    }
     public static boolean isPrimaryCooldownOver(UUID uuid) {
         return masterPlayerDataList.get(uuid).isPrimaryCooldownOver();
     }

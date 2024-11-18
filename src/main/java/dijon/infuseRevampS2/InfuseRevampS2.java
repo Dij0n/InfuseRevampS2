@@ -1,7 +1,11 @@
 package dijon.infuseRevampS2;
 
-import dijon.infuseRevampS2.Commands.infusegive;
-import dijon.infuseRevampS2.Commands.infusegivetabcomplete;
+import dijon.infuseRevampS2.Commands.Member.ldrain;
+import dijon.infuseRevampS2.Commands.Member.lspark;
+import dijon.infuseRevampS2.Commands.Member.rdrain;
+import dijon.infuseRevampS2.Commands.Member.rspark;
+import dijon.infuseRevampS2.Commands.OP.infusegive;
+import dijon.infuseRevampS2.Commands.OP.infusegivetabcomplete;
 import dijon.infuseRevampS2.Data.CooldownFileManager;
 import dijon.infuseRevampS2.Data.JoinDataListener;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
@@ -22,10 +26,11 @@ public final class InfuseRevampS2 extends JavaPlugin {
         instance = this;
 
         //Manager Initializers
+        InfuseEffect.initializeList();
         PlayerDataManager.initialize();
         PlayerFileManager.initialize();
-        InfuseEffect.initializeEffects();
         CooldownFileManager.initializeTimes();
+        InfuseEffect.initializeEffects();
         PotionItemStacks.initializeLore();
 
         //Listeners
@@ -33,10 +38,15 @@ public final class InfuseRevampS2 extends JavaPlugin {
         new DrinkListener();
 
         //HUD
-        new HUDDisplayer().runTaskTimer(this, 0, 5);
+        new HUDDisplayer().runTaskTimer(this, 0, 2);
 
         //Commands
         this.getCommand("infusegive").setExecutor(new infusegive());
+        this.getCommand("ldrain").setExecutor(new ldrain());
+        this.getCommand("rdrain").setExecutor(new rdrain());
+        this.getCommand("lspark").setExecutor(new lspark());
+        this.getCommand("rspark").setExecutor(new rspark());
+
         this.getCommand("infusegive").setTabCompleter(new infusegivetabcomplete());
 
     }

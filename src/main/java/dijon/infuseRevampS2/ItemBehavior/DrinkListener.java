@@ -65,8 +65,9 @@ public class DrinkListener implements Listener {
             oldEffect.getAction().runUnequippedTask(p);
         }
 
+        p.playSound(p.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1F, 1.3F);
         PlayerDataManager.setPrimary(p.getUniqueId(), effect);
-        PlayerDataManager.setLastPrimaryActivation(p.getUniqueId(), System.currentTimeMillis());
+        PlayerDataManager.setLastPrimaryActivation(p.getUniqueId(), 0);
         effect.getAction().runEquipTask(p);
     }
     public void applyToSecondarySlot(Player p, InfuseEffect effect, PlayerItemConsumeEvent e){
@@ -93,7 +94,8 @@ public class DrinkListener implements Listener {
         }
 
         PlayerDataManager.setSecondary(p.getUniqueId(), effect);
-        PlayerDataManager.setLastSecondaryActivation(p.getUniqueId(), System.currentTimeMillis());
+        PlayerDataManager.setLastSecondaryActivation(p.getUniqueId(), 0);
+        p.playSound(p.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1F, 1.3F);
         effect.getAction().runEquipTask(p);
     }
 }

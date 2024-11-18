@@ -4,53 +4,49 @@ import dijon.infuseRevampS2.Data.CooldownFileManager;
 import dijon.infuseRevampS2.EffectActions.Actions.*;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 
 public enum InfuseEffect {
 
-    NONE("none", "\uE001", "\uE001", 0x0, new NoneAction()),
-    STRENGTH("strength", "\uE002", "\uE014", 0xE0191D, new StrengthAction()),
-    HEART("heart", "\uE003", "\uE015", 0xA61719, new HeartAction()),
-    HASTE("haste", "\uE004", "\uE016", 0xFFDC1E, new HasteAction()),
-    INVIS("invis", "\uE005", "\uE017", 0xB895FF, new InvisAction()),
-    FEATHER("feather", "\uE006", "\uE018", 0xAE60D, new FeatherAction()),
-    FROST("frost", "\uE007", "\uE019", 0x3FE4FF, new FrostAction()),
-    THUNDER("thunder", "\uE008", "\uE020", 0xE5E349, new ThunderAction()),
-    REGEN("regen", "\uE009", "\uE021", 0xFFB6AC, new RegenAction()),
-    OCEAN("ocean", "\uE010", "\uE022", 0x137BFF, new OceanAction()),
-    FIRE("fire", "\uE011", "\uE023", 0xFF5103, new FireAction()),
-    EMERALD("emerald", "\uE012", "\uE024", 0x1EFF12, new EmeraldAction()),
-    SPEED("speed", "\uE013", "\uE025", 0x5EE1FF, new SpeedAction()),
-    ENDER("ender", "\uE026", "\uE027", 0x69248E, new EnderAction());
+    NONE("none", "", "", 0x0),
+    STRENGTH("strength", "\uE002", "\uE014", 0xE0191D),
+    HEART("heart", "\uE003", "\uE015", 0xA61719),
+    HASTE("haste", "\uE004", "\uE016", 0xFFDC1E),
+    INVIS("invis", "\uE005", "\uE017", 0xB895FF),
+    FEATHER("feather", "\uE006", "\uE018", 0xAE60D),
+    FROST("frost", "\uE007", "\uE019", 0x3FE4FF),
+    THUNDER("thunder", "\uE008", "\uE020", 0xE5E349),
+    REGEN("regen", "\uE009", "\uE021", 0xFFB6AC),
+    OCEAN("ocean", "\uE010", "\uE022", 0x137BFF),
+    FIRE("fire", "\uE011", "\uE023", 0xFF5103),
+    EMERALD("emerald", "\uE012", "\uE024", 0x1EFF12),
+    SPEED("speed", "\uE013", "\uE025", 0x5EE1FF),
+    ENDER("ender", "\uE026", "\uE027", 0x69248E);
 
     final String name;
     final String texture;
     final String textureSpark;
     final TextColor color;
     final int rawColor;
-    final InfuseAction action;
-    int sparkDuration = 0;
-    int sparkCooldown = 0;
+    InfuseAction action;
+    int sparkDuration;
+    int sparkCooldown;
 
     final static ArrayList<InfuseEffect> effectList = new ArrayList<>();
 
-    InfuseEffect(String name, String texture, String textureSpark, int rawColor, InfuseAction action){
+    InfuseEffect(String name, String texture, String textureSpark, int rawColor){
         this.name = name;
         this.texture = texture;
         this.textureSpark = textureSpark;
         this.color = TextColor.color(rawColor);
         this.rawColor = rawColor;
-        this.action = action;
 
-        //Some method here to get the cooldowns from storage
-        //Some method here to get the cooldowns from storage
-        //Some method here to get the cooldowns from storage
+        //Initialized Later
         this.sparkDuration = 0;
         this.sparkCooldown = 0;
-        //Some method here to get the cooldowns from storage
-        //Some method here to get the cooldowns from storage
-        //Some method here to get the cooldowns from storage
+        this.action = null;
     }
 
     public String getName() {
@@ -84,8 +80,11 @@ public enum InfuseEffect {
     public void setSparkCooldown(int time){
         this.sparkCooldown = time;
     }
+    public void setAction(InfuseAction action){
+        this.action = action;
+    }
 
-    public static void initializeEffects(){
+    public static void initializeList(){
         effectList.add(InfuseEffect.NONE);
         effectList.add(InfuseEffect.STRENGTH);
         effectList.add(InfuseEffect.HEART);
@@ -102,10 +101,25 @@ public enum InfuseEffect {
         effectList.add(InfuseEffect.ENDER);
     }
 
-    public static void loadTimesIntoEffects(){
+    public static void initializeEffects(){
+        InfuseEffect.NONE.setAction(new NoneAction());
+        InfuseEffect.STRENGTH.setAction(new StrengthAction());
+        InfuseEffect.HEART.setAction(new HeartAction());
+        InfuseEffect.HASTE.setAction(new HasteAction());
+        InfuseEffect.INVIS.setAction(new InvisAction());
+        InfuseEffect.FEATHER.setAction(new FeatherAction());
+        InfuseEffect.FROST.setAction(new FrostAction());
+        InfuseEffect.THUNDER.setAction(new ThunderAction());
+        InfuseEffect.REGEN.setAction(new RegenAction());
+        InfuseEffect.OCEAN.setAction(new OceanAction());
+        InfuseEffect.FIRE.setAction(new FireAction());
+        InfuseEffect.EMERALD.setAction(new EmeraldAction());
+        InfuseEffect.SPEED.setAction(new SpeedAction());
+        InfuseEffect.ENDER.setAction(new EnderAction());
         for(InfuseEffect effect : effectList){
             effect.setSparkDuration(CooldownFileManager.getEffectDuration(effect));
             effect.setSparkCooldown(CooldownFileManager.getEffectCooldown(effect));
+            Bukkit.getLogger().info("Loading effect " + effect.getName() + " With Dur/Col " + CooldownFileManager.getEffectDuration(effect) + " " + CooldownFileManager.getEffectCooldown(effect));
         }
     }
 

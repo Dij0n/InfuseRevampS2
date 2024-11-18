@@ -67,7 +67,6 @@ public class CooldownFileManager {
 
         for (String effectName : config.getKeys(false)) {
             if(effectName.equals("swap")) break;
-            Bukkit.getLogger().info("Loading effect " + effectName);
 
             int duration = Integer.parseInt(String.valueOf(config.get(effectName + ".duration")));
             int cooldown = Integer.parseInt(String.valueOf(config.get(effectName + ".cooldown")));
@@ -79,8 +78,6 @@ public class CooldownFileManager {
         }
 
         PlayerDataManager.globalSwapCooldown = Long.parseLong(String.valueOf(config.get("swap")));
-
-        InfuseEffect.loadTimesIntoEffects();
     }
 
     public static int getEffectDuration(InfuseEffect effect){
@@ -96,51 +93,51 @@ public class CooldownFileManager {
         config.set("none" + ".cooldown", 0);
 
         config.set("strength" + ".duration", 20);
-        config.set("strength" + ".cooldown", 90);
+        config.set("strength" + ".cooldown", 9);
 
         config.set("heart" + ".duration", 90);
-        config.set("heart" + ".cooldown", 150);
+        config.set("heart" + ".cooldown", 15);
 
         config.set("haste" + ".duration", 30);
-        config.set("haste" + ".cooldown", 60);
+        config.set("haste" + ".cooldown", 6);
 
         config.set("invis" + ".duration", 15);
-        config.set("invis" + ".cooldown", 60);
+        config.set("invis" + ".cooldown", 6);
 
         config.set("feather" + ".duration", 7);
-        config.set("feather" + ".cooldown", 30);
+        config.set("feather" + ".cooldown", 3);
 
         config.set("frost" + ".duration", 20);
-        config.set("frost" + ".cooldown", 75);
+        config.set("frost" + ".cooldown", 7);
 
         config.set("thunder" + ".duration", 3);
-        config.set("thunder" + ".cooldown", 120);
+        config.set("thunder" + ".cooldown", 12);
 
         config.set("regen" + ".duration", 15);
-        config.set("regen" + ".cooldown", 75);
+        config.set("regen" + ".cooldown", 7);
 
         config.set("ocean" + ".duration", 10);
-        config.set("ocean" + ".cooldown", 30);
+        config.set("ocean" + ".cooldown", 3);
 
         config.set("fire" + ".duration", 10);
-        config.set("fire" + ".cooldown", 45);
+        config.set("fire" + ".cooldown", 4);
 
-        config.set("emerald" + ".duration", 60);
-        config.set("emerald" + ".cooldown", 60);
+        config.set("emerald" + ".duration", 20);
+        config.set("emerald" + ".cooldown", 6);
 
         config.set("speed" + ".duration", 1);
-        config.set("speed" + ".cooldown", 15);
+        config.set("speed" + ".cooldown", 1);
 
         config.set("ender" + ".duration", 30);
-        config.set("ender" + ".cooldown", 90);
+        config.set("ender" + ".cooldown", 9);
 
-        config.set("enderfake" + ".duration", 30);
-        config.set("enderfake" + ".cooldown", 90);
+        config.set("enderfake" + ".duration", 20);
+        config.set("enderfake" + ".cooldown", 9);
 
         config.set("apophis" + ".duration", 20);
-        config.set("apophis" + ".cooldown", 120);
+        config.set("apophis" + ".cooldown", 12);
 
-        config.set("swap", 60000);
+        config.set("swap", 6000);
 
         try {
             config.save(cooldownFile);

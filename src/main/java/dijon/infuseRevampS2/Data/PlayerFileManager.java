@@ -41,8 +41,6 @@ public class PlayerFileManager {
             String uuid = save.getUuid().toString();
             String primary = save.getPrimary().getName();
             String secondary = save.getSecondary().getName();
-            String primaryActivated = String.valueOf(save.isPrimaryActivated());
-            String secondaryActivated = String.valueOf(save.isSecondaryActivated());
             String lastPrimary = String.valueOf(save.getLastPrimaryActivation());
             String lastSecondary = String.valueOf(save.getLastSecondaryActivation());
             String lastPrimarySwap = String.valueOf(save.getLastPrimarySwap());
@@ -57,8 +55,6 @@ public class PlayerFileManager {
 
             config.set(uuid + ".primary", primary);
             config.set(uuid + ".secondary", secondary);
-            config.set(uuid + ".primaryActive", primaryActivated);
-            config.set(uuid + ".secondaryActive", secondaryActivated);
             config.set(uuid + ".lastPrimaryActivation", lastPrimary);
             config.set(uuid + ".lastSecondaryActivation", lastSecondary);
             config.set(uuid + ".lastPrimarySwap", lastPrimarySwap);
@@ -90,15 +86,11 @@ public class PlayerFileManager {
 
             InfuseEffect primary = parseEffect((String) config.get(uuid + ".primary"));
             InfuseEffect secondary = parseEffect((String) config.get(uuid + ".secondary"));
-            boolean primaryActivated = Boolean.parseBoolean((String) config.get(uuid + ".primaryActive"));
-            boolean secondaryActivated = Boolean.parseBoolean((String) config.get(uuid + ".secondaryActive"));
             long lastPrimary = Long.parseLong((String) config.get(uuid + ".lastPrimaryActivation"));
             long lastSecondary = Long.parseLong((String) config.get(uuid + ".lastSecondaryActivation"));
             long lastPrimarySwap = Long.parseLong((String) config.get(uuid + ".lastPrimarySwap"));
             long lastSecondarySwap = Long.parseLong((String) config.get(uuid + ".lastSecondarySwap"));
             List<String> trustedList = config.getStringList(uuid + ".trustedPlayers");
-
-            Bukkit.getLogger().info("Effect " + primary.getName());
 
             ArrayList<UUID> trustedListUUIDs = new ArrayList<>();
             for(String listedUUID : trustedList){
@@ -107,8 +99,8 @@ public class PlayerFileManager {
 
             PlayerData save = new PlayerData(UUID.fromString(uuid), primary, secondary);
 
-            save.setPrimaryActivated(primaryActivated);
-            save.setSecondaryActivated(secondaryActivated);
+            save.setPrimaryActivated(false);
+            save.setSecondaryActivated(false);
             save.setLastPrimaryActivation(lastPrimary);
             save.setLastSecondaryActivation(lastSecondary);
             save.setLastPrimarySwap(lastPrimarySwap);
@@ -123,7 +115,7 @@ public class PlayerFileManager {
     public static InfuseEffect parseEffect(String name){
 
         for(InfuseEffect effect : InfuseEffect.getEffectList()){
-            if (effect.getName().equals(name)){
+            if (effect.getName().equalsIgnoreCase(name)){
                 return effect;
             }
         }
