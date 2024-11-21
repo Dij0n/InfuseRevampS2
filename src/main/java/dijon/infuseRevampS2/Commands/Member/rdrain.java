@@ -52,8 +52,12 @@ public class rdrain implements CommandExecutor {
             player.getInventory().addItem(effectItem);
         }
         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1F, 0.9F);
-        PlayerDataManager.setSecondary(uuid, InfuseEffect.NONE);
         effect.getAction().runUnequippedTask(player);
+        PlayerDataManager.setSecondary(uuid, InfuseEffect.NONE);
+        if(!PlayerDataManager.getPrimary(uuid).equals(InfuseEffect.NONE)){
+            PlayerDataManager.setSecondary(uuid, PlayerDataManager.getPrimary(uuid));
+            PlayerDataManager.setPrimary(uuid, InfuseEffect.NONE);
+        }
     }
 
 }

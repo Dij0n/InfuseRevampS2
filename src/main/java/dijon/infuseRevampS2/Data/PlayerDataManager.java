@@ -33,6 +33,17 @@ public class PlayerDataManager {
     public static boolean isSecondaryActivated(UUID uuid) {
         return masterPlayerDataList.get(uuid).isSecondaryActivated();
     }
+    public static boolean hasEffect(UUID uuid, InfuseEffect effect){
+        return getPrimary(uuid).equals(effect) || getSecondary(uuid).equals(effect);
+    }
+    public static boolean hasEffectSparked(UUID uuid, InfuseEffect effect){
+        if(!hasEffect(uuid, effect)) return false;
+
+        if(getPrimary(uuid).equals(effect) && isPrimaryActivated(uuid)) return true;
+        if(getSecondary(uuid).equals(effect) && isSecondaryActivated(uuid)) return true;
+        
+        return false;
+    }
 
     //SETTERS
     public static void setPrimary(UUID uuid, InfuseEffect infuseEffect){

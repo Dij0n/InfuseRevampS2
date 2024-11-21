@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -54,9 +55,12 @@ public class DrinkListener implements Listener {
             return;
         }
 
-        p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount()-1);
-
-        e.getItem().setAmount(e.getItem().getAmount() - 1);
+        if(e.getHand().equals(EquipmentSlot.HAND)){
+            p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
+        }
+        if(e.getHand().equals(EquipmentSlot.OFF_HAND)){
+            p.getInventory().getItemInOffHand().setAmount(p.getInventory().getItemInOffHand().getAmount()-1);
+        }
 
         if (somethingInSlot){
             ItemStack oldEffectItem = PotionItemStacks.getItemStack(oldEffect);

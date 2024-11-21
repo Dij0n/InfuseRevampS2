@@ -23,6 +23,10 @@ public class PotionItemStacks {
     public static void initializeLore(){
         ArrayList<Component> lore = new ArrayList<>();
 
+        lore.add(Component.text("earth wow"));
+        masterLoreList.put(InfuseEffect.EARTH, (ArrayList<Component>) lore.clone());
+        lore.clear();
+
         lore.add(Component.text("emerald wow"));
         masterLoreList.put(InfuseEffect.EMERALD, (ArrayList<Component>) lore.clone());
         lore.clear();

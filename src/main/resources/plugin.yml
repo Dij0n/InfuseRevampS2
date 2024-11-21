@@ -13,3 +13,9 @@ commands:
     usage: /lspark
   rspark:
     usage: /rspark
+  setduration:
+    usage: /setduration
+  setcooldown:
+    usage: /setcooldown
+  swap:
+    usage: /swap

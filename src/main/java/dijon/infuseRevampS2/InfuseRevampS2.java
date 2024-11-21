@@ -1,16 +1,19 @@
 package dijon.infuseRevampS2;
 
-import dijon.infuseRevampS2.Commands.Member.ldrain;
-import dijon.infuseRevampS2.Commands.Member.lspark;
-import dijon.infuseRevampS2.Commands.Member.rdrain;
-import dijon.infuseRevampS2.Commands.Member.rspark;
+import dijon.infuseRevampS2.Commands.Member.*;
 import dijon.infuseRevampS2.Commands.OP.infusegive;
 import dijon.infuseRevampS2.Commands.OP.infusegivetabcomplete;
+import dijon.infuseRevampS2.Commands.OP.setcooldown;
+import dijon.infuseRevampS2.Commands.OP.setduration;
 import dijon.infuseRevampS2.Data.CooldownFileManager;
 import dijon.infuseRevampS2.Data.JoinDataListener;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.Data.PlayerFileManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
+import dijon.infuseRevampS2.EffectActions.Listeners.EmeraldListener;
+import dijon.infuseRevampS2.EffectActions.Listeners.HasteListener;
+import dijon.infuseRevampS2.EffectActions.Listeners.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.StrengthListener;
 import dijon.infuseRevampS2.HUD.HUDDisplayer;
 import dijon.infuseRevampS2.ItemBehavior.DrinkListener;
 import dijon.infuseRevampS2.ItemBehavior.PotionItemStacks;
@@ -32,10 +35,15 @@ public final class InfuseRevampS2 extends JavaPlugin {
         CooldownFileManager.initializeTimes();
         InfuseEffect.initializeEffects();
         PotionItemStacks.initializeLore();
+        ListenerHelpers.initialize();
 
         //Listeners
         new JoinDataListener();
         new DrinkListener();
+
+        new StrengthListener();
+        new EmeraldListener();
+        new HasteListener();
 
         //HUD
         new HUDDisplayer().runTaskTimer(this, 0, 2);
@@ -46,8 +54,14 @@ public final class InfuseRevampS2 extends JavaPlugin {
         this.getCommand("rdrain").setExecutor(new rdrain());
         this.getCommand("lspark").setExecutor(new lspark());
         this.getCommand("rspark").setExecutor(new rspark());
+        this.getCommand("setcooldown").setExecutor(new setcooldown());
+        this.getCommand("setduration").setExecutor(new setduration());
+        this.getCommand("swap").setExecutor(new swap());
 
         this.getCommand("infusegive").setTabCompleter(new infusegivetabcomplete());
+        this.getCommand("setcooldown").setTabCompleter(new infusegivetabcomplete());
+        this.getCommand("setduration").setTabCompleter(new infusegivetabcomplete());
+
 
     }
 

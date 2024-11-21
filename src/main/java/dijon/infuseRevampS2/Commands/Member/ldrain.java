@@ -59,8 +59,8 @@ public class ldrain implements CommandExecutor {
             player.getInventory().addItem(effectItem);
         }
         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1F, 0.9F);
-        PlayerDataManager.setPrimary(uuid, InfuseEffect.NONE);
         effect.getAction().runUnequippedTask(player);
+        PlayerDataManager.setPrimary(uuid, InfuseEffect.NONE);
     }
 
 }

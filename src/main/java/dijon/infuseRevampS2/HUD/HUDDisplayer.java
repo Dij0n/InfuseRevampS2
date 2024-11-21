@@ -55,7 +55,7 @@ public class HUDDisplayer extends BukkitRunnable {
             sTimeString = Component.text("       ");
         }
         if (sTimeString != null && pTimeString == null){
-            pTimeString = Component.text("       ");
+            pTimeString = Component.text("      ");
         }
 
         //Safety null checks

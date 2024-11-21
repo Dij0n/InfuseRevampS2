@@ -1,5 +1,6 @@
 package dijon.infuseRevampS2.Commands.Member;
 
+import dijon.infuseRevampS2.Data.PlayerData;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.ChatColor;
@@ -43,6 +44,7 @@ public class lspark implements CommandExecutor {
         if(PlayerDataManager.getPrimary(uuid).equals(InfuseEffect.NONE)) return;
         if(PlayerDataManager.isPrimaryActivated(uuid)) return;
         if(!PlayerDataManager.isPrimaryCooldownOver(uuid)) return;
+        if(PlayerDataManager.getPrimary(uuid).equals(PlayerDataManager.getSecondary(uuid)) && PlayerDataManager.isSecondaryActivated(uuid)) return;
 
         PlayerDataManager.setPrimaryActive(uuid, true);
         PlayerDataManager.setLastPrimaryActivation(uuid, System.currentTimeMillis());

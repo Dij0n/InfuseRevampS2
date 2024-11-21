@@ -27,6 +27,7 @@ public class infusegivetabcomplete implements TabCompleter {
             completions.add("emerald");
             completions.add("speed");
             completions.add("ender");
+            completions.add("earth");
         }
 
         return completions;

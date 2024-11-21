@@ -23,11 +23,13 @@ public abstract class InfuseAction {
     }
 
     public void runEquipTask(Player player){
+        stopActiveRunnable(player.getUniqueId());
         onEquip(player);
         addStandardRunnable(player.getUniqueId());
     }
 
     public void runUnequippedTask(Player player){
+        if(PlayerDataManager.getPrimary(player.getUniqueId()).equals(PlayerDataManager.getSecondary(player.getUniqueId()))) return; //If the effects are the same don't bother removing the runnable
         onSparkEnd(player);
         onUnequipped(player);
         stopActiveRunnable(player.getUniqueId());

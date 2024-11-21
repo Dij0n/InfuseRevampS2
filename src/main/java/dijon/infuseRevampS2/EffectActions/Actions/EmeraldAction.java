@@ -1,13 +1,15 @@
 package dijon.infuseRevampS2.EffectActions.Actions;
 
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
+import dijon.infuseRevampS2.EffectActions.Listeners.ListenerHelpers;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 public class EmeraldAction extends InfuseAction {
 
@@ -17,22 +19,23 @@ public class EmeraldAction extends InfuseAction {
 
     @Override
     protected void onEquip(Player player) {
-        player.sendMessage("emerlad wooo");
+
     }
 
     @Override
     protected void onUnequipped(Player player) {
-        player.sendMessage("emerlad booo");
+        ListenerHelpers.generalRemoveSpecialItem(player.getInventory().getItemInMainHand(), ListenerHelpers.swords, Enchantment.LOOTING, 5);
+        ListenerHelpers.generalRemoveSpecialItem(player.getInventory().getItemInOffHand(), ListenerHelpers.swords, Enchantment.LOOTING, 5);
     }
 
     @Override
     protected void onSparked(Player player) {
-        player.sendMessage("emerlad spark!!!");
+
     }
 
     @Override
     protected void onSparkEnd(Player player) {
-        player.sendMessage("emerlad spark no :((");
+
     }
 
     @Override
@@ -40,7 +43,8 @@ public class EmeraldAction extends InfuseAction {
         return new BukkitRunnable() {
             @Override
             public void run() {
-                player.sendMessage("emerald normal :)");
+                player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 30, 99));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE, 30, 2));
             }
         };
     }
@@ -50,7 +54,8 @@ public class EmeraldAction extends InfuseAction {
         return new BukkitRunnable() {
             @Override
             public void run() {
-                player.sendMessage("emerald spark! >:)");
+                player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 30, 99));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE, 30, 99));
             }
         };
     }
