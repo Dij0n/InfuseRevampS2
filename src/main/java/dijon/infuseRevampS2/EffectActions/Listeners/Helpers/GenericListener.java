@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 
@@ -27,6 +28,14 @@ public class GenericListener implements Listener {
             }
             PlayerDataManager.incHitCount(e.getDamager().getUniqueId());
         }
+    }
+
+    @EventHandler
+    public void onWitherHit(EntityDamageEvent e){
+//        if(!(e.getEntity() instanceof Player player)) return;
+//        if(e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)){
+//            e.setCancelled(true);
+//        }
     }
 
 

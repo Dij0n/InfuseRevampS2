@@ -1,7 +1,13 @@
 package dijon.infuseRevampS2.EffectActions.Listeners.Helpers;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.EnumWrappers;
+import com.comphenix.protocol.wrappers.Pair;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -14,8 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class ListenerHelpers {
 
@@ -23,6 +29,8 @@ public class ListenerHelpers {
     public static final Set<Material> pickaxesAndTools = new HashSet<>();
     public static final Set<Material> bows = new HashSet<>();
     public static final Set<Material> veinMined = new HashSet<>();
+
+    public static final Set<UUID> hiddenPlayers = new HashSet<>();
 
     public static void initialize(){
 
@@ -145,6 +153,36 @@ public class ListenerHelpers {
 
     public static boolean mobAndPlayer(EntityDamageByEntityEvent e){
         return e.getEntity() instanceof Player && e.getDamager() instanceof LivingEntity;
+    }
+
+    public static boolean tenthHit(EntityDamageByEntityEvent e){
+        if(!playerAndMob(e)) return false;
+        int hitCount = PlayerDataManager.getHitCount(e.getDamager().getUniqueId());
+        return hitCount % 10 == 0;
+    }
+
+    public static void hidePlayer(Player player) {
+        PacketContainer packet = new PacketContainer(PacketType.Play.Server.ENTITY_EQUIPMENT);
+        packet.getIntegers().write(0, player.getEntityId());
+        List<Pair<EnumWrappers.ItemSlot, ItemStack>> pairList = new ArrayList<>();
+        for(EnumWrappers.ItemSlot slot : EnumWrappers.ItemSlot.values()){
+            pairList.add(new Pair<>(slot, null));
+        }
+
+        packet.getSlotStackPairLists().write(0, pairList);
+
+        for(Player p : Bukkit.getOnlinePlayers()){
+            if (p.equals(player)) continue;
+            ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
+        }
+        if(hiddenPlayers.contains(player.getUniqueId())) return;
+        hiddenPlayers.add(player.getUniqueId());
+    }
+    public static void showPlayer(Player player) {
+        if(hiddenPlayers.isEmpty()) return;
+        if(!hiddenPlayers.contains(player.getUniqueId())) return;
+        ProtocolLibrary.getProtocolManager().updateEntity(player, new ArrayList<>(Bukkit.getOnlinePlayers()));
+        hiddenPlayers.remove(player.getUniqueId());
     }
 
 

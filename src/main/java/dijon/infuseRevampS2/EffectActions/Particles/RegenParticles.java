@@ -46,8 +46,6 @@ public class RegenParticles extends BukkitRunnable {
             }
         }
 
-        drawLine(player.getLocation().add(new Vector(0, 1, 0)), player.getLocation().add(new Vector(10, 1, 5)));
-
         counter++;
         if(counter >= timeLimit || Bukkit.getPlayer(uuid) == null){
             cancel();
