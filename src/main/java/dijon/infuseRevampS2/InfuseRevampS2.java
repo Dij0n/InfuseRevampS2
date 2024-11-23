@@ -10,10 +10,9 @@ import dijon.infuseRevampS2.Data.JoinDataListener;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.Data.PlayerFileManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.EmeraldListener;
-import dijon.infuseRevampS2.EffectActions.Listeners.HasteListener;
-import dijon.infuseRevampS2.EffectActions.Listeners.ListenerHelpers;
-import dijon.infuseRevampS2.EffectActions.Listeners.StrengthListener;
+import dijon.infuseRevampS2.EffectActions.Listeners.*;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.GenericListener;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
 import dijon.infuseRevampS2.HUD.HUDDisplayer;
 import dijon.infuseRevampS2.ItemBehavior.DrinkListener;
 import dijon.infuseRevampS2.ItemBehavior.PotionItemStacks;
@@ -41,9 +40,13 @@ public final class InfuseRevampS2 extends JavaPlugin {
         new JoinDataListener();
         new DrinkListener();
 
+        new GenericListener();
         new StrengthListener();
         new EmeraldListener();
         new HasteListener();
+        new RegenListener();
+        new HeartListener();
+        new SpeedListener();
 
         //HUD
         new HUDDisplayer().runTaskTimer(this, 0, 2);
@@ -56,7 +59,9 @@ public final class InfuseRevampS2 extends JavaPlugin {
         this.getCommand("rspark").setExecutor(new rspark());
         this.getCommand("setcooldown").setExecutor(new setcooldown());
         this.getCommand("setduration").setExecutor(new setduration());
-        this.getCommand("swap").setExecutor(new swap());
+        //this.getCommand("swap").setExecutor(new swap());
+        this.getCommand("trust").setExecutor(new trust());
+        this.getCommand("trusted").setExecutor(new trusted());
 
         this.getCommand("infusegive").setTabCompleter(new infusegivetabcomplete());
         this.getCommand("setcooldown").setTabCompleter(new infusegivetabcomplete());

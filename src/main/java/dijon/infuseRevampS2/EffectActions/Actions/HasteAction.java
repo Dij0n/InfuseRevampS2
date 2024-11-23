@@ -1,7 +1,7 @@
 package dijon.infuseRevampS2.EffectActions.Actions;
 
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;

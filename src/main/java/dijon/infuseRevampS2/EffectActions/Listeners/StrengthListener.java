@@ -1,12 +1,11 @@
 package dijon.infuseRevampS2.EffectActions.Listeners;
 
-import dijon.infuseRevampS2.Data.PlayerData;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import io.papermc.paper.event.player.PlayerShieldDisableEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -17,15 +16,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.Vector;
 
-import java.util.List;
 import java.util.UUID;
 
 public class StrengthListener implements Listener {

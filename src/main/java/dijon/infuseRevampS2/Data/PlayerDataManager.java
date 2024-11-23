@@ -2,7 +2,9 @@ package dijon.infuseRevampS2.Data;
 
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -34,6 +36,7 @@ public class PlayerDataManager {
         return masterPlayerDataList.get(uuid).isSecondaryActivated();
     }
     public static boolean hasEffect(UUID uuid, InfuseEffect effect){
+        if(Bukkit.getPlayer(uuid) == null) return false;
         return getPrimary(uuid).equals(effect) || getSecondary(uuid).equals(effect);
     }
     public static boolean hasEffectSparked(UUID uuid, InfuseEffect effect){
@@ -43,6 +46,12 @@ public class PlayerDataManager {
         if(getSecondary(uuid).equals(effect) && isSecondaryActivated(uuid)) return true;
         
         return false;
+    }
+    public static ArrayList<UUID> getTrustedList(UUID uuid){
+        return masterPlayerDataList.get(uuid).getTrustedPlayerList();
+    }
+    public static int getHitCount(UUID uuid){
+        return masterPlayerDataList.get(uuid).getHitCount();
     }
 
     //SETTERS
@@ -70,6 +79,13 @@ public class PlayerDataManager {
     }
     public static void setLastSecondarySwap(UUID uuid, long time){
         masterPlayerDataList.get(uuid).setLastSecondarySwap(time);
+    }
+
+    public static void incHitCount(UUID uuid){
+        masterPlayerDataList.get(uuid).incHitCount();
+    }
+    public static void resetHitCount(UUID uuid){
+        masterPlayerDataList.get(uuid).resetHitCount();
     }
 
     //COOLDOWNS
@@ -108,6 +124,12 @@ public class PlayerDataManager {
     }
     public static long getSecondarySwapCooldownLeft(UUID uuid){
         return masterPlayerDataList.get(uuid).getSecondarySwapCooldownLeft();
+    }
+    public static void addTrustedPlayer(UUID uuid, Player p){
+        masterPlayerDataList.get(uuid).addTrustedPlayer(p);
+    }
+    public static void removeTrustedPlayer(UUID uuid, Player p){
+        masterPlayerDataList.get(uuid).removeTrustedPlayer(p);
     }
 
     //As needed, pull methods from playerdata here. For now these are kinda the only ones you need

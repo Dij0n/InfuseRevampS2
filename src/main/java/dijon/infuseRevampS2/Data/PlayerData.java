@@ -17,6 +17,7 @@ public class PlayerData {
     long lastSecondaryActivation = 0;
     long lastPrimarySwap = 0;
     long lastSecondarySwap = 0;
+    int hitCount = 0;
 
     ArrayList<UUID> trusted = new ArrayList<UUID>();
 
@@ -54,6 +55,9 @@ public class PlayerData {
     public long getLastSecondarySwap() {
         return lastSecondarySwap;
     }
+    public int getHitCount(){
+        return hitCount;
+    }
 
     //SETTERS
     public void setUuid(UUID uuid) {
@@ -82,6 +86,13 @@ public class PlayerData {
     }
     public void setLastSecondarySwap(long lastSecondarySwap) {
         this.lastSecondarySwap = lastSecondarySwap;
+    }
+    public void incHitCount(){
+        this.hitCount++;
+        if(this.hitCount >= 20) hitCount = 0;
+    }
+    public void resetHitCount(){
+        hitCount = 0;
     }
 
     //TRUSTED PLAYERS

@@ -1,4 +1,4 @@
-package dijon.infuseRevampS2.EffectActions.Listeners;
+package dijon.infuseRevampS2.EffectActions.Listeners.Helpers;
 
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
@@ -122,6 +122,10 @@ public class ListenerHelpers {
         if(!materials.contains(itemStack.getType())) return;
         if(!itemStack.containsEnchantment(enchantment)) return;
         if(itemStack.getEnchantmentLevel(enchantment) != specialLevel) return;
+        if(itemStack.getPersistentDataContainer().has(enchantment.getKey())){
+            if(itemStack.getEnchantmentLevel(enchantment) == itemStack.getPersistentDataContainer().get(enchantment.getKey(), PersistentDataType.INTEGER)) return;
+        }
+
 
         itemStack.removeEnchantment(enchantment);
         if(itemStack.getPersistentDataContainer().has(enchantment.getKey())){
@@ -137,6 +141,10 @@ public class ListenerHelpers {
     }
     public static boolean playerAndMob(EntityDamageByEntityEvent e){
         return e.getEntity() instanceof LivingEntity && e.getDamager() instanceof Player;
+    }
+
+    public static boolean mobAndPlayer(EntityDamageByEntityEvent e){
+        return e.getEntity() instanceof Player && e.getDamager() instanceof LivingEntity;
     }
 
 
