@@ -6,6 +6,7 @@ import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,6 +58,7 @@ public class RegenListener implements Listener {
             Player teammate = Bukkit.getPlayer(uuid);
             if(teammate == null) continue;
             teammate.heal(healAmount);
+            teammate.playSound(teammate, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 2, 2);
         }
     }
 

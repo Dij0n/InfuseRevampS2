@@ -7,6 +7,7 @@ import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
 import dijon.infuseRevampS2.EffectActions.Particles.InvisParticles;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -39,6 +40,12 @@ public class InvisAction extends InfuseAction {
     @Override
     protected void onSparkEnd(Player player) {
         ListenerHelpers.showPlayer(player);
+        for(UUID uuid : PlayerDataManager.getTrustedList(player.getUniqueId())){
+            if(Bukkit.getPlayer(uuid) != null){
+                Player teammate = Bukkit.getPlayer(uuid);
+                ListenerHelpers.showPlayer(teammate);
+            }
+        }
     }
 
     @Override
@@ -58,16 +65,28 @@ public class InvisAction extends InfuseAction {
             public void run() {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 30, 0));
                 ListenerHelpers.hidePlayer(player);
+                player.playSound(player, Sound.ENTITY_BREEZE_IDLE_GROUND, 2, 1);
                 for(Entity e : player.getNearbyEntities(10, 4, 10)){
+                    e.getWorld().playSound(e, Sound.ENTITY_BREEZE_IDLE_GROUND, 2, 1);
                     if(!(e instanceof Player victim)) continue;
                     if(e.equals(player)) continue;
-                    if(PlayerDataManager.getTrustedList(player.getUniqueId()).contains(victim.getUniqueId())){
-                        ListenerHelpers.hidePlayer(victim);
-                    }else{
+                    if(!PlayerDataManager.getTrustedList(player.getUniqueId()).contains(victim.getUniqueId())){
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20, 0));
                     }
                 }
+
+                for(UUID uuid : PlayerDataManager.getTrustedList(player.getUniqueId())){
+                    if(Bukkit.getPlayer(uuid) != null){
+                        Player teammate = Bukkit.getPlayer(uuid);
+                        if(teammate.getNearbyEntities(10, 4, 10).contains(player)){
+                            ListenerHelpers.hidePlayer(teammate);
+                        }else{
+                            ListenerHelpers.showPlayer(teammate);
+                        }
+                    }
+                }
+
             }
         };
     }

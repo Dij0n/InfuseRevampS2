@@ -162,6 +162,7 @@ public class ListenerHelpers {
     }
 
     public static void hidePlayer(Player player) {
+        if(hiddenPlayers.contains(player.getUniqueId())) return;
         PacketContainer packet = new PacketContainer(PacketType.Play.Server.ENTITY_EQUIPMENT);
         packet.getIntegers().write(0, player.getEntityId());
         List<Pair<EnumWrappers.ItemSlot, ItemStack>> pairList = new ArrayList<>();
@@ -175,7 +176,6 @@ public class ListenerHelpers {
             if (p.equals(player)) continue;
             ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
         }
-        if(hiddenPlayers.contains(player.getUniqueId())) return;
         hiddenPlayers.add(player.getUniqueId());
     }
     public static void showPlayer(Player player) {

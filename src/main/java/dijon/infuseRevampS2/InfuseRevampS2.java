@@ -17,7 +17,6 @@ import dijon.infuseRevampS2.HUD.HUDDisplayer;
 import dijon.infuseRevampS2.ItemBehavior.DrinkListener;
 import dijon.infuseRevampS2.ItemBehavior.PotionItemStacks;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.codehaus.plexus.interpolation.SingleResponseValueSource;
 
 public final class InfuseRevampS2 extends JavaPlugin {
 
@@ -49,6 +48,7 @@ public final class InfuseRevampS2 extends JavaPlugin {
         new HeartListener();
         new SpeedListener();
         new InvisListener();
+        new FrostListener();
 
         //HUD
         new HUDDisplayer().runTaskTimer(this, 0, 2);

@@ -20,6 +20,7 @@ public class CooldownFileManager {
     public static void initializeTimes(){
         cooldownFile = new File(InfuseRevampS2.instance.getDataFolder(), "cooldowns.yml");
 
+        Bukkit.getLogger().info(String.valueOf(cooldownFile.exists()));
         if (!cooldownFile.exists()) {
             try {
                 cooldownFile.createNewFile();
@@ -108,7 +109,7 @@ public class CooldownFileManager {
         config.set("feather" + ".cooldown", 40);
 
         config.set("frost" + ".duration", 15);
-        config.set("frost" + ".cooldown", 90);
+        config.set("frost" + ".cooldown", 60);
 
         config.set("thunder" + ".duration", 15);
         config.set("thunder" + ".cooldown", 90);
