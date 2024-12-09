@@ -34,8 +34,10 @@ public class HealthIndicator extends BukkitRunnable {
         textDisplay = (TextDisplay) player.getWorld().spawnEntity(player.getLocation(), EntityType.TEXT_DISPLAY);
 
         int healthDisplay = (int) player.getHealth();
-
-        textDisplay.text(Component.text(healthDisplay + " ❤").color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD));
+        double heathDisplayFull = (double) healthDisplay / 2;
+        Component name = Component.text(heathDisplayFull).color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD);
+        Component heart = Component.text(" ❤").color(TextColor.color(255, 47, 51)).decoration(TextDecoration.BOLD, false);
+        textDisplay.text(name.append(heart));
         textDisplay.setBackgroundColor(Color.fromARGB(0, 255, 47, 51));
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.setShadowed(true);
@@ -50,13 +52,19 @@ public class HealthIndicator extends BukkitRunnable {
     public void run() {
 
         int healthDisplay = (int) player.getHealth();
-        textDisplay.text(Component.text(healthDisplay + " ❤").color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD));
+        double heathDisplayFull = (double) healthDisplay / 2;
+        Component name = Component.text(heathDisplayFull).color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD);
+        Component heart = Component.text(" ❤").color(TextColor.color(255, 47, 51)).decoration(TextDecoration.BOLD, false);
+        textDisplay.text(name.append(heart));
 
         counter++;
         if(counter >= timeLimit || Bukkit.getPlayer(uuid) == null){
             textDisplay.remove();
             cancel();
         }
+    }
 
+    public void die(){
+        textDisplay.remove();
     }
 }

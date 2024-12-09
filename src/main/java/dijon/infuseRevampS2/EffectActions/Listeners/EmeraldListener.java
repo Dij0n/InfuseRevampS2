@@ -8,6 +8,7 @@ import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentOffer;
@@ -63,6 +64,7 @@ public class EmeraldListener implements Listener {
             p.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             ItemStack lykainosTheDestroyer = e.getItem().clone();
             lykainosTheDestroyer.setAmount(1);
+            p.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, p.getLocation().add(0, 1, 0), 10, 0.25, 0.25, 0.25);
             Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
                 e.getPlayer().getInventory().addItem(lykainosTheDestroyer);
             }, 1);

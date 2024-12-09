@@ -73,7 +73,7 @@ public class StrengthListener implements Listener {
     //ALL CRITS
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e){
-        if(!Helpers.bothPlayers(e)) return;
+        if(!Helpers.playerAndMob(e)) return;
         if(!sparked(e.getDamager().getUniqueId())) return;
 
         Player player = (Player) e.getDamager();
@@ -83,7 +83,7 @@ public class StrengthListener implements Listener {
 
         e.setDamage(e.getDamage() * 1.5);
         player.getWorld().spawnParticle(Particle.CRIT, victim.getEyeLocation(), 20);
-        player.playSound(player, Sound.ENTITY_PLAYER_ATTACK_CRIT, 10, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 10, 1);
     }
 
     //HELPERS

@@ -29,6 +29,15 @@ public class GenericListener implements Listener {
     }
 
     @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        if(event.getEntity() instanceof Player){
+            if (event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onWitherHit(EntityDamageEvent e){
 //        if(!(e.getEntity() instanceof Player player)) return;
 //        if(e.getCause().equals(EntityDamageEvent.DamageCause.WITHER)){

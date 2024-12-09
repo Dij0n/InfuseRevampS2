@@ -33,9 +33,10 @@ public class Whirlpool extends BukkitRunnable {
 
     @Override
     public void run() {
+        location = player.getLocation();
         spawnAllParticles();
 
-        for(Entity entity : location.getNearbyEntities(24, 24, 24)){
+        for(Entity entity : location.getNearbyEntities(15, 15, 15)){
 
             if(entity.equals(player)) continue;
             if(trustedList.contains(entity.getUniqueId())) continue;
@@ -72,7 +73,7 @@ public class Whirlpool extends BukkitRunnable {
         double x3 = Math.cos(theta + offset);
         double z3 = Math.sin(theta + offset);
 
-        for(int i=8;i<=24;i+=4){
+        for(int i=5;i<=12;i+=3){
             Location newLoc1 = location.clone().add(new Vector(x1 * i, 1, z1 * i));
             Location newLoc2 = location.clone().add(new Vector(x2 * i, 2, z2 * i));
             Location newLoc3 = location.clone().add(new Vector(x3 * i, 3, z3 * i));

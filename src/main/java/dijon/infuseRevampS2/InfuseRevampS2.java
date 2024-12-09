@@ -18,6 +18,8 @@ import dijon.infuseRevampS2.ItemBehavior.DrinkListener;
 import dijon.infuseRevampS2.ItemBehavior.PotionItemStacks;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.UUID;
+
 public final class InfuseRevampS2 extends JavaPlugin {
 
     public static InfuseRevampS2 instance;
@@ -51,6 +53,7 @@ public final class InfuseRevampS2 extends JavaPlugin {
         new FrostListener();
         new FeatherListener();
         new OceanListener();
+        new ThunderListener();
 
         //HUD
         new HUDDisplayer().runTaskTimer(this, 0, 2);
@@ -78,5 +81,9 @@ public final class InfuseRevampS2 extends JavaPlugin {
     public void onDisable() {
         PlayerFileManager.saveData();
         CooldownFileManager.saveCooldowns();
+        for(UUID uuid : HeartListener.indicatorHashMap.keySet()){
+            HeartListener.indicatorHashMap.get(uuid).die();
+            HeartListener.indicatorHashMap.remove(uuid);
+        }
     }
 }

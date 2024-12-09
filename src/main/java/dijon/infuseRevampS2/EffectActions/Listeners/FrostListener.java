@@ -1,5 +1,6 @@
 package dijon.infuseRevampS2.EffectActions.Listeners;
 
+import com.destroystokyo.paper.event.entity.CreeperIgniteEvent;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
@@ -80,6 +81,11 @@ public class FrostListener implements Listener {
             }
         };
         task.runTaskTimer(InfuseRevampS2.instance, 0, 1);
+    }
+
+    @EventHandler
+    public void onCreeperExplode(CreeperIgniteEvent e){
+        e.getEntity().removePotionEffect(PotionEffectType.SLOWNESS);
     }
 
     //HELPERS

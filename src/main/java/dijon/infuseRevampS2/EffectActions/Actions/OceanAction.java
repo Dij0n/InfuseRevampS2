@@ -5,6 +5,7 @@ import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.EffectActions.Spawnables.Objects.Whirlpool;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
+import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -71,7 +72,10 @@ public class OceanAction extends InfuseAction {
                         if(PlayerDataManager.getTrustedList(player.getUniqueId()).contains(opp.getUniqueId())) continue;
                         if(PlayerDataManager.hasEffectSparked(opp.getUniqueId(), InfuseEffect.OCEAN)) continue;
 
-                        opp.setRemainingAir(opp.getRemainingAir() - 6);
+                        int drainTime = 11;
+                        if(!opp.getWorld().isClearWeather()) drainTime = 14;
+
+                        opp.setRemainingAir(Math.max(opp.getRemainingAir() - drainTime, -10));
                         opp.getWorld().spawnParticle(Particle.BUBBLE_POP,opp.getLocation().add(new Vector(0, 1, 0)), 30, 0.2, 0.5, 0.2,0);
 
                         if(count % 10 == 0 && opp.getRemainingAir() < 0){

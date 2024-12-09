@@ -1,8 +1,11 @@
 package dijon.infuseRevampS2.Data;
 
+import dijon.infuseRevampS2.EffectActions.Listeners.HeartListener;
+import dijon.infuseRevampS2.EffectActions.Spawnables.Objects.HealthIndicator;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Vindicator;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -40,7 +43,13 @@ public class JoinDataListener implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
+
         UUID uuid = event.getPlayer().getUniqueId();
+
+        if(HeartListener.indicatorHashMap.containsKey(uuid)){
+            HeartListener.indicatorHashMap.get(uuid).die();
+            HeartListener.indicatorHashMap.remove(uuid);
+        }
 
         PlayerDataManager.getPrimary(uuid).getAction().runLeaveTask(event.getPlayer());
         PlayerDataManager.setPrimaryActive(uuid, false);

@@ -101,16 +101,14 @@ public class FrostAction extends InfuseAction {
 
     private void checkBlock(Player player){
         Block blockUnder = player.getWorld().getBlockAt(player.getLocation().add(new Vector(0, -1, 0)));
+        Block blockIn = player.getWorld().getBlockAt(player.getLocation());
+
         if(blockUnder.getType().equals(Material.SNOW_BLOCK) || blockUnder.getType().equals(Material.ICE) || blockUnder.getType().equals(Material.PACKED_ICE) || blockUnder.getType().equals(Material.BLUE_ICE)){
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 9));
+        }else if(blockIn.getType().equals(Material.SNOW) || blockIn.getType().equals(Material.POWDER_SNOW)){
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 9));
         }else if(!blockUnder.getType().equals(Material.AIR)){
             player.removePotionEffect(PotionEffectType.SPEED);
-        }
-
-
-
-        if(blockUnder.getType().equals(Material.POWDER_SNOW)){
-
         }
     }
 }

@@ -188,6 +188,12 @@ public class Helpers {
         return hitCount % 10 == 0;
     }
 
+    public static boolean fifthHit(EntityDamageByEntityEvent e){
+        if(!playerAndMob(e)) return false;
+        int hitCount = PlayerDataManager.getHitCount(e.getDamager().getUniqueId());
+        return hitCount % 5 == 0;
+    }
+
     public static void hidePlayer(Player player) {
         if(hiddenPlayers.contains(player.getUniqueId())) return;
         PacketContainer packet = new PacketContainer(PacketType.Play.Server.ENTITY_EQUIPMENT);
