@@ -43,7 +43,7 @@ public class InvisParticles extends BukkitRunnable {
         for(double x = player.getLocation().getX() - size; x < player.getLocation().getX() + size + 1; x += (Math.random() * stepSize)){
             for(double y = player.getLocation().getY() - 1; y < player.getLocation().getY() + 3 + (Math.random() * 3); y += Math.random()){
                 for(double z = player.getLocation().getZ() - size; z < player.getLocation().getZ() + size + 1; z += (Math.random() * stepSize)){
-                    player.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, new Location(player.getWorld(), x, y, z), 1, 0, 0, 0, 0.02);
+                    player.getWorld().spawnParticle(Particle.SQUID_INK, new Location(player.getWorld(), x, y, z), 1, 0, 0, 0, 0.02);
                 }
             }
         }

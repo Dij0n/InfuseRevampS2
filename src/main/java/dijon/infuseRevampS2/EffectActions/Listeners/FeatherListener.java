@@ -7,6 +7,7 @@ import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,8 +43,9 @@ public class FeatherListener implements Listener {
     public void featherMace(EntityDamageByEntityEvent e){
         if(!Helpers.playerAndMob(e)) return;
         if(hasEffect(e.getDamager().getUniqueId())){
-            if(e.getDamager().getFallDistance() > 20){
+            if(e.getDamager().getFallDistance() > 10){
                 e.setDamage(e.getDamage() * 1.5);
+                e.getDamager().getWorld().playSound(e.getDamager(), Sound.ITEM_MACE_SMASH_GROUND, 1f, 1f);
             }
         }
     }
@@ -71,6 +73,11 @@ public class FeatherListener implements Listener {
         if(!(e.getEntity().getShooter() instanceof Player player)) return;
         if(!(e.getEntity() instanceof WindCharge windCharge)) return;
         if(hasEffect(player.getUniqueId())){
+
+            Vector velocity = windCharge.getVelocity();
+            velocity.subtract(player.getVelocity());
+            windCharge.setVelocity(velocity);
+
             windCharge.setAcceleration(windCharge.getAcceleration().multiply(2));
             Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
                 player.setCooldown(Material.WIND_CHARGE, 4);

@@ -29,7 +29,7 @@ public class RegenListener implements Listener {
         if(!hasEffect(e.getDamager().getUniqueId())) return;
         if(sparked(e.getDamager().getUniqueId())) return;
         Player player = (Player) e.getDamager();
-        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 0));
     }
 
     @EventHandler
@@ -56,8 +56,9 @@ public class RegenListener implements Listener {
         for(UUID uuid : PlayerDataManager.getTrustedList(player.getUniqueId())){
             Player teammate = Bukkit.getPlayer(uuid);
             if(teammate == null) continue;
+            if(teammate.equals(e.getEntity())) continue;
             teammate.heal(healAmount);
-            teammate.playSound(teammate, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 2, 2);
+            teammate.playSound(teammate, Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.5f, 2);
         }
     }
 

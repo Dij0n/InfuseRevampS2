@@ -4,7 +4,10 @@ import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.EffectActions.Listeners.SpeedListener;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
+import dijon.infuseRevampS2.InfuseRevampS2;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -41,6 +44,16 @@ public class SpeedAction extends InfuseAction {
         Vector v = player.getLocation().getDirection().normalize().multiply(2.25);
         v.setY(v.getY() / 2);
         player.setVelocity(v);
+        BukkitRunnable runnable = new BukkitRunnable() {
+            int count = 0;
+            @Override
+            public void run() {
+                player.getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 3);
+                count++;
+                if(count>20) cancel();
+            }
+        };
+        runnable.runTaskTimer(InfuseRevampS2.instance, 0, 1);
     }
 
     @Override
@@ -54,10 +67,10 @@ public class SpeedAction extends InfuseAction {
             @Override
             public void run() {
                 if(SpeedListener.speedCooldownMap.getOrDefault(player.getUniqueId(), 0) > 0){
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, SpeedListener.speedLevelMap.get(player.getUniqueId()) + 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, SpeedListener.speedLevelMap.get(player.getUniqueId())));
                 }else{
                     SpeedListener.speedLevelMap.put(player.getUniqueId(), 0);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0));
                 }
             }
         };
@@ -69,10 +82,10 @@ public class SpeedAction extends InfuseAction {
             @Override
             public void run() {
                 if(SpeedListener.speedCooldownMap.getOrDefault(player.getUniqueId(), 0) >= 0){
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, SpeedListener.speedLevelMap.get(player.getUniqueId()) + 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, SpeedListener.speedLevelMap.get(player.getUniqueId())));
                 }else{
                     SpeedListener.speedLevelMap.put(player.getUniqueId(), 0);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0));
                 }
 
             }

@@ -41,7 +41,7 @@ public class SpeedListener implements Listener {
         if(attacker.getAttackCooldown() < 1) return;
         UUID uuid = e.getDamager().getUniqueId();
         speedLevelMap.put(uuid, speedLevelMap.getOrDefault(uuid, 0) + 1); //Increase Speed Level
-        if(speedLevelMap.get(uuid) > 5) speedLevelMap.put(uuid, 5);
+        if(speedLevelMap.get(uuid) > 7) speedLevelMap.put(uuid, 7);
         speedCooldownMap.putIfAbsent(uuid, 0); //Initialize Cooldown if not already initialized
         speedCooldownMap.put(uuid, speedCooldownMap.get(uuid) + 20); //Increase cooldown by 20 ticks
         BukkitRunnable task = new BukkitRunnable() {

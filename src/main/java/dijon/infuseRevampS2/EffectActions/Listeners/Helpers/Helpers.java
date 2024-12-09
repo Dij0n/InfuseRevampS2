@@ -20,6 +20,8 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -195,6 +197,7 @@ public class Helpers {
     }
 
     public static void hidePlayer(Player player) {
+        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, PotionEffect.INFINITE_DURATION, 0));
         if(hiddenPlayers.contains(player.getUniqueId())) return;
         PacketContainer packet = new PacketContainer(PacketType.Play.Server.ENTITY_EQUIPMENT);
         packet.getIntegers().write(0, player.getEntityId());
@@ -212,6 +215,7 @@ public class Helpers {
         hiddenPlayers.add(player.getUniqueId());
     }
     public static void showPlayer(Player player) {
+        player.removePotionEffect(PotionEffectType.INVISIBILITY);
         if(hiddenPlayers.isEmpty()) return;
         if(!hiddenPlayers.contains(player.getUniqueId())) return;
         ProtocolLibrary.getProtocolManager().updateEntity(player, new ArrayList<>(Bukkit.getOnlinePlayers()));

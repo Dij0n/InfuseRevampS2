@@ -25,7 +25,7 @@ public class RegenAction extends InfuseAction {
 
     @Override
     protected void onSparked(Player player) {
-        new RegenParticles(player, PlayerDataManager.getTrustedList(player.getUniqueId()), InfuseEffect.REGEN.getSparkDuration(), 5);
+        new RegenParticles(player, PlayerDataManager.getTrustedList(player.getUniqueId()), InfuseEffect.REGEN.getSparkDuration(), 10);
     }
 
     @Override

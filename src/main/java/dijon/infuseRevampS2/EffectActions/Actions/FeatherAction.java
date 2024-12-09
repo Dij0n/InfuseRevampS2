@@ -38,7 +38,7 @@ public class FeatherAction extends InfuseAction {
 
     @Override
     protected void onSparked(Player player) {
-        player.setVelocity(new Vector(0, 1.5, 0));
+        player.setVelocity(new Vector(0, 1.06, 0));
         Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
             FeatherListener.featherPoundMap.put(player.getUniqueId(), true);
         }, 5);
@@ -46,7 +46,7 @@ public class FeatherAction extends InfuseAction {
 
     @Override
     protected void onSparkEnd(Player player) {
-
+        FeatherListener.featherPoundMap.put(player.getUniqueId(), false);
     }
 
     @Override
