@@ -5,6 +5,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.comphenix.protocol.wrappers.Pair;
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.Bukkit;
@@ -20,15 +21,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-public class ListenerHelpers {
+public class Helpers {
 
     public static final Set<Material> swords = new HashSet<>();
     public static final Set<Material> pickaxesAndTools = new HashSet<>();
     public static final Set<Material> bows = new HashSet<>();
     public static final Set<Material> veinMined = new HashSet<>();
+    public static final Set<Material> boots = new HashSet<>();
 
     public static final Set<UUID> hiddenPlayers = new HashSet<>();
 
@@ -88,6 +89,13 @@ public class ListenerHelpers {
         veinMined.add(Material.DEEPSLATE_DIAMOND_ORE);
         veinMined.add(Material.NETHER_QUARTZ_ORE);
         veinMined.add(Material.NETHER_GOLD_ORE);
+
+        boots.add(Material.LEATHER_BOOTS);
+        boots.add(Material.CHAINMAIL_BOOTS);
+        boots.add(Material.IRON_BOOTS);
+        boots.add(Material.GOLDEN_BOOTS);
+        boots.add(Material.DIAMOND_BOOTS);
+        boots.add(Material.NETHERITE_BOOTS);
     }
 
     //Special Enchanting
@@ -141,6 +149,25 @@ public class ListenerHelpers {
         }
     }
 
+    public static void onEquipSpecialArmor(PlayerArmorChangeEvent e, InfuseEffect effect, Set<Material> materials, Enchantment enchantment, int specialLevel){
+        Player player = e.getPlayer();
+        if(!PlayerDataManager.hasEffect(player.getUniqueId(), effect)) return;
+
+        ItemStack newItemStack = e.getNewItem();
+        player.sendMessage(newItemStack.getType().toString());
+
+        if(materials.contains(newItemStack.getType())){
+            if(newItemStack.containsEnchantment(enchantment)){
+                ItemMeta meta = newItemStack.getItemMeta();
+                meta.getPersistentDataContainer().set(enchantment.getKey(), PersistentDataType.INTEGER, newItemStack.getEnchantmentLevel(enchantment));
+                newItemStack.setItemMeta(meta);
+            }
+            e.getNewItem().addUnsafeEnchantment(enchantment, specialLevel);
+        }
+    }
+    public static void onUnEquipSpecialArmor(PlayerArmorChangeEvent e, Set<Material> materials, Enchantment enchantment, int specialLevel){
+        generalRemoveSpecialItem(e.getOldItem(), materials, enchantment, specialLevel);
+    }
 
 
     //Boolean Checks
@@ -183,6 +210,28 @@ public class ListenerHelpers {
         if(!hiddenPlayers.contains(player.getUniqueId())) return;
         ProtocolLibrary.getProtocolManager().updateEntity(player, new ArrayList<>(Bukkit.getOnlinePlayers()));
         hiddenPlayers.remove(player.getUniqueId());
+    }
+
+    public static void trueDamage(LivingEntity victim, int damage){
+
+        if(victim.isDead()) return;
+        victim.damage(0.1);
+
+
+        if(victim.getAbsorptionAmount() > 0){
+            if(victim.getAbsorptionAmount() - damage < 0){
+                victim.setHealth(victim.getHealth() - (damage - victim.getAbsorptionAmount()));
+                victim.setAbsorptionAmount(0);
+            }else{
+                victim.setAbsorptionAmount(victim.getAbsorptionAmount() - damage);
+            }
+        }else{
+            if(victim.getHealth() - damage <= 0){
+                victim.setHealth(0);
+            }else{
+                victim.setHealth(victim.getHealth() - damage);
+            }
+        }
     }
 
 

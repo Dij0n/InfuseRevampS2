@@ -2,7 +2,7 @@ package dijon.infuseRevampS2.EffectActions.Listeners;
 
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import io.papermc.paper.event.player.PlayerShieldDisableEvent;
 import org.bukkit.Bukkit;
@@ -41,7 +41,7 @@ public class StrengthListener implements Listener {
     //INSTANT KILL ENTITIES
     @EventHandler
     public void instantKill(EntityDamageByEntityEvent e){
-        if(!ListenerHelpers.playerAndMob(e)) return;
+        if(!Helpers.playerAndMob(e)) return;
         Player player = (Player) e.getDamager();
         LivingEntity mob = (LivingEntity) e.getEntity();
         if(mob.getType().equals(EntityType.VILLAGER) || mob.getType().equals(EntityType.PLAYER)) return;
@@ -54,18 +54,18 @@ public class StrengthListener implements Listener {
     //BOWS HAVE PIERCING
     @EventHandler
     public void onHoldBow(PlayerItemHeldEvent e){
-        ListenerHelpers.onHoldSpecialItem(e, InfuseEffect.STRENGTH, ListenerHelpers.bows, Enchantment.PIERCING, 100);
-        ListenerHelpers.onNotHoldSpecialItem(e, ListenerHelpers.bows, Enchantment.PIERCING, 100);
+        Helpers.onHoldSpecialItem(e, InfuseEffect.STRENGTH, Helpers.bows, Enchantment.PIERCING, 100);
+        Helpers.onNotHoldSpecialItem(e, Helpers.bows, Enchantment.PIERCING, 100);
     }
 
     @EventHandler
     public void onDropBow(PlayerDropItemEvent e){
-        ListenerHelpers.onDropSpecialItem(e, ListenerHelpers.bows, Enchantment.PIERCING, 100);
+        Helpers.onDropSpecialItem(e, Helpers.bows, Enchantment.PIERCING, 100);
     }
 
     @EventHandler
     public void onMoveBow(InventoryClickEvent e){
-        ListenerHelpers.onMoveSpecialItem(e, ListenerHelpers.bows, Enchantment.PIERCING, 100);
+        Helpers.onMoveSpecialItem(e, Helpers.bows, Enchantment.PIERCING, 100);
     }
 
     //SPARKS
@@ -73,7 +73,7 @@ public class StrengthListener implements Listener {
     //ALL CRITS
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e){
-        if(!ListenerHelpers.bothPlayers(e)) return;
+        if(!Helpers.bothPlayers(e)) return;
         if(!sparked(e.getDamager().getUniqueId())) return;
 
         Player player = (Player) e.getDamager();

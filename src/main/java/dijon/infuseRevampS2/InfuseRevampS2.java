@@ -12,7 +12,7 @@ import dijon.infuseRevampS2.Data.PlayerFileManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Listeners.*;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.GenericListener;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.HUD.HUDDisplayer;
 import dijon.infuseRevampS2.ItemBehavior.DrinkListener;
 import dijon.infuseRevampS2.ItemBehavior.PotionItemStacks;
@@ -34,7 +34,7 @@ public final class InfuseRevampS2 extends JavaPlugin {
         CooldownFileManager.initializeTimes();
         InfuseEffect.initializeEffects();
         PotionItemStacks.initializeLore();
-        ListenerHelpers.initialize();
+        Helpers.initialize();
 
         //Listeners
         new JoinDataListener();
@@ -49,6 +49,8 @@ public final class InfuseRevampS2 extends JavaPlugin {
         new SpeedListener();
         new InvisListener();
         new FrostListener();
+        new FeatherListener();
+        new OceanListener();
 
         //HUD
         new HUDDisplayer().runTaskTimer(this, 0, 2);

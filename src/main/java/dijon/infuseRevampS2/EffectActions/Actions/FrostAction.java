@@ -43,8 +43,11 @@ public class FrostAction extends InfuseAction {
 
     @Override
     protected void onSparkEnd(Player player) {
-        FrostListener.frostedJumpValues.clear();
         FrostListener.frostedCooldownMap.clear();
+        FrostListener.frostedJumpValues.clear();
+        for(Player enemy : Bukkit.getOnlinePlayers()){
+            enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.42);
+        }
     }
 
     @Override
@@ -52,16 +55,15 @@ public class FrostAction extends InfuseAction {
         return new BukkitRunnable() {
             @Override
             public void run() {
-                Block blockUnder = player.getWorld().getBlockAt(player.getLocation().add(new Vector(0, -1, 0)));
-                if(blockUnder.getType().equals(Material.SNOW_BLOCK) || blockUnder.getType().equals(Material.ICE) || blockUnder.getType().equals(Material.PACKED_ICE) || blockUnder.getType().equals(Material.BLUE_ICE)){
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 9));
-                }
-
-                if(blockUnder.getType().equals(Material.POWDER_SNOW)){
-                    blockUnder.setType(Material.SNOW_BLOCK);
-                    Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
-                        blockUnder.setType(Material.POWDER_SNOW);
-                    }, 100);
+                checkBlock(player);
+                for(Player enemy : Bukkit.getOnlinePlayers()){
+                    if(!FrostListener.frostedCooldownMap.containsKey(enemy.getUniqueId())){
+                        if(enemy.getFreezeTicks() > 0){
+                            enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.35);
+                        }else{
+                            enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.42);
+                        }
+                    }
                 }
             }
         };
@@ -72,30 +74,43 @@ public class FrostAction extends InfuseAction {
         return new BukkitRunnable() {
             @Override
             public void run() {
-                Block blockUnder = player.getWorld().getBlockAt(player.getLocation().add(new Vector(0, -1, 0)));
-                if(blockUnder.getType().equals(Material.SNOW_BLOCK) || blockUnder.getType().equals(Material.ICE) || blockUnder.getType().equals(Material.PACKED_ICE) || blockUnder.getType().equals(Material.BLUE_ICE)){
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 9));
-                }
+                checkBlock(player);
 
-                if(blockUnder.getType().equals(Material.POWDER_SNOW)){
-                    blockUnder.setType(Material.SNOW_BLOCK);
-                    Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
-                        blockUnder.setType(Material.POWDER_SNOW);
-                    }, 100);
-                }
-                for(UUID enemyUUID : FrostListener.frostedCooldownMap.keySet()){
-                    Player enemy = Bukkit.getPlayer(enemyUUID);
-                    if(enemy == null) continue;
-                    enemy.setFreezeTicks(40);
-                    if(FrostListener.frostedCooldownMap.getOrDefault(enemy.getUniqueId(), 0) > 0){
-                        enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(FrostListener.frostedJumpValues.getOrDefault(enemy.getUniqueId(), 0.35));
+                for(Player enemy : Bukkit.getOnlinePlayers()){
+                    if(FrostListener.frostedCooldownMap.containsKey(enemy.getUniqueId())){
+                        enemy.setFreezeTicks(340);
+                        if(FrostListener.frostedCooldownMap.getOrDefault(enemy.getUniqueId(), 0) > 0){
+                            enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(FrostListener.frostedJumpValues.getOrDefault(enemy.getUniqueId(), 0.35));
+                        }else{
+                            FrostListener.frostedJumpValues.remove(enemy.getUniqueId());
+                            FrostListener.frostedCooldownMap.remove(enemy.getUniqueId());
+                        }
                     }else{
-                        FrostListener.frostedJumpValues.remove(enemy.getUniqueId());
-                        FrostListener.frostedCooldownMap.remove(enemy.getUniqueId());
-                        enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.42);
+                        if(enemy.getFreezeTicks() > 0){
+                            enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.35);
+                        }else{
+                            enemy.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(0.42);
+                        }
                     }
                 }
+
             }
         };
+    }
+
+
+    private void checkBlock(Player player){
+        Block blockUnder = player.getWorld().getBlockAt(player.getLocation().add(new Vector(0, -1, 0)));
+        if(blockUnder.getType().equals(Material.SNOW_BLOCK) || blockUnder.getType().equals(Material.ICE) || blockUnder.getType().equals(Material.PACKED_ICE) || blockUnder.getType().equals(Material.BLUE_ICE)){
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 9));
+        }else if(!blockUnder.getType().equals(Material.AIR)){
+            player.removePotionEffect(PotionEffectType.SPEED);
+        }
+
+
+
+        if(blockUnder.getType().equals(Material.POWDER_SNOW)){
+
+        }
     }
 }

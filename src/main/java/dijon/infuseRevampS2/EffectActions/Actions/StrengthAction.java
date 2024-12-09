@@ -1,7 +1,7 @@
 package dijon.infuseRevampS2.EffectActions.Actions;
 
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -20,8 +20,8 @@ public class StrengthAction extends InfuseAction {
 
     @Override
     protected void onUnequipped(Player player) {
-        ListenerHelpers.generalRemoveSpecialItem(player.getInventory().getItemInMainHand(), ListenerHelpers.bows, Enchantment.PIERCING, 100);
-        ListenerHelpers.generalRemoveSpecialItem(player.getInventory().getItemInOffHand(), ListenerHelpers.bows, Enchantment.PIERCING, 100);
+        Helpers.generalRemoveSpecialItem(player.getInventory().getItemInMainHand(), Helpers.bows, Enchantment.PIERCING, 100);
+        Helpers.generalRemoveSpecialItem(player.getInventory().getItemInOffHand(), Helpers.bows, Enchantment.PIERCING, 100);
     }
 
     @Override

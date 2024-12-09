@@ -2,12 +2,11 @@ package dijon.infuseRevampS2.EffectActions.Listeners;
 
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
-import dijon.infuseRevampS2.EffectActions.Particles.HealthIndicator;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
+import dijon.infuseRevampS2.EffectActions.Spawnables.Objects.HealthIndicator;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +25,7 @@ public class HeartListener implements Listener {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e){
-        if(ListenerHelpers.bothPlayers(e)){
+        if(Helpers.bothPlayers(e)){
             if(!hasEffect(e.getDamager().getUniqueId())) return;
             int hitCount = PlayerDataManager.getHitCount(e.getDamager().getUniqueId());
             if(hitCount % 10 == 0){

@@ -1,9 +1,8 @@
 package dijon.infuseRevampS2.EffectActions.Actions;
 
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.EffectActions.Listeners.SpeedListener;
-import dijon.infuseRevampS2.EffectActions.Listeners.StrengthListener;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -12,7 +11,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import org.checkerframework.checker.units.qual.Speed;
 
 import java.util.Collections;
 
@@ -31,10 +29,10 @@ public class SpeedAction extends InfuseAction {
     @Override
     protected void onUnequipped(Player player) {
         if(!(player.getInventory().getItemInMainHand().getType().equals(Material.CROSSBOW) && player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.QUICK_CHARGE) == 3)){
-            ListenerHelpers.generalRemoveSpecialItem(player.getInventory().getItemInMainHand(), Collections.singleton(Material.CROSSBOW), Enchantment.QUICK_CHARGE, 2);
+            Helpers.generalRemoveSpecialItem(player.getInventory().getItemInMainHand(), Collections.singleton(Material.CROSSBOW), Enchantment.QUICK_CHARGE, 2);
         }
         if(!(player.getInventory().getItemInOffHand().getType().equals(Material.CROSSBOW) && player.getInventory().getItemInOffHand().getEnchantmentLevel(Enchantment.QUICK_CHARGE) == 3)){
-            ListenerHelpers.generalRemoveSpecialItem(player.getInventory().getItemInOffHand(), Collections.singleton(Material.CROSSBOW), Enchantment.QUICK_CHARGE, 2);
+            Helpers.generalRemoveSpecialItem(player.getInventory().getItemInOffHand(), Collections.singleton(Material.CROSSBOW), Enchantment.QUICK_CHARGE, 2);
         }
     }
 

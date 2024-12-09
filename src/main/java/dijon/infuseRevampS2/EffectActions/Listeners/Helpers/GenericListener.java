@@ -8,8 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
 
 public class GenericListener implements Listener {
 
@@ -19,7 +17,7 @@ public class GenericListener implements Listener {
 
     @EventHandler
     public void onAttackPlayer(EntityDamageByEntityEvent e){
-        if(ListenerHelpers.playerAndMob(e)){
+        if(Helpers.playerAndMob(e)){
             if(e.getEntity() instanceof Player victim && victim.isBlocking()){
                 return;
             }

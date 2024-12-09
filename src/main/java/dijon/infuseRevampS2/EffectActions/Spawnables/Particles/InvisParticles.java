@@ -1,14 +1,11 @@
-package dijon.infuseRevampS2.EffectActions.Particles;
+package dijon.infuseRevampS2.EffectActions.Spawnables.Particles;
 
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.UUID;

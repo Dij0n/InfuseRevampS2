@@ -4,7 +4,7 @@ import com.destroystokyo.paper.event.player.PlayerLaunchProjectileEvent;
 import com.destroystokyo.paper.event.player.PlayerPickupExperienceEvent;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -119,18 +119,18 @@ public class EmeraldListener implements Listener {
 
     @EventHandler
     public void onHoldSword(PlayerItemHeldEvent e){
-        ListenerHelpers.onHoldSpecialItem(e, InfuseEffect.EMERALD, ListenerHelpers.swords, Enchantment.LOOTING, 5);
-        ListenerHelpers.onNotHoldSpecialItem(e, ListenerHelpers.swords, Enchantment.LOOTING, 5);
+        Helpers.onHoldSpecialItem(e, InfuseEffect.EMERALD, Helpers.swords, Enchantment.LOOTING, 5);
+        Helpers.onNotHoldSpecialItem(e, Helpers.swords, Enchantment.LOOTING, 5);
     }
 
     @EventHandler
     public void onDropSword(PlayerDropItemEvent e){
-        ListenerHelpers.onDropSpecialItem(e, ListenerHelpers.swords, Enchantment.LOOTING, 5);
+        Helpers.onDropSpecialItem(e, Helpers.swords, Enchantment.LOOTING, 5);
     }
 
     @EventHandler
     public void onMoveSword(InventoryClickEvent e){
-        ListenerHelpers.onMoveSpecialItem(e, ListenerHelpers.swords, Enchantment.LOOTING, 5);
+        Helpers.onMoveSpecialItem(e, Helpers.swords, Enchantment.LOOTING, 5);
     }
 
     //HELPERS

@@ -1,4 +1,4 @@
-package dijon.infuseRevampS2.EffectActions.Particles;
+package dijon.infuseRevampS2.EffectActions.Spawnables.Objects;
 
 import dijon.infuseRevampS2.InfuseRevampS2;
 import net.kyori.adventure.text.Component;
@@ -6,17 +6,12 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.*;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Transformation;
-import org.bukkit.util.Vector;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class HealthIndicator extends BukkitRunnable {

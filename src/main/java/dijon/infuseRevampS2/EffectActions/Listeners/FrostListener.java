@@ -2,7 +2,7 @@ package dijon.infuseRevampS2.EffectActions.Listeners;
 
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -33,7 +33,7 @@ public class FrostListener implements Listener {
         if(!hasEffect(e.getDamager().getUniqueId())) return;
 
         if(e.getEntity() instanceof Player player){
-            if(!ListenerHelpers.tenthHit(e)) return;
+            if(!Helpers.tenthHit(e)) return;
             player.setFreezeTicks(200);
             return;
         }
@@ -46,11 +46,7 @@ public class FrostListener implements Listener {
 
     @EventHandler
     public void onWindChargeGlobal(ProjectileLaunchEvent e){
-        Bukkit.getLogger().info("Launched");
-        Bukkit.getLogger().info(String.valueOf(e.getEntity().getShooter() instanceof Player));
         if(e.getEntity() instanceof WindCharge && e.getEntity().getShooter() instanceof Player player){
-            Bukkit.getLogger().info("player!");
-            Bukkit.getLogger().info(String.valueOf(player.getFreezeTicks()));
             if(player.getFreezeTicks() > 0){
                 Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
                     player.setCooldown(Material.WIND_CHARGE, 60);
@@ -64,13 +60,13 @@ public class FrostListener implements Listener {
         if(!sparked(e.getDamager().getUniqueId())) return;
         if(!(e.getEntity() instanceof Player player)) return;
 
-        player.setFreezeTicks(200);
+        player.setFreezeTicks(340);
         UUID uuid = player.getUniqueId();
         frostedJumpValues.putIfAbsent(uuid , 0.45);
         frostedJumpValues.put(uuid, frostedJumpValues.get(uuid) - 0.1d);
         if(frostedJumpValues.get(uuid) < 0) frostedJumpValues.put(uuid, 0d);
 
-        frostedCooldownMap.putIfAbsent(uuid, 20); //Initialize Cooldown if not already initialized
+        frostedCooldownMap.putIfAbsent(uuid, 0); //Initialize Cooldown if not already initialized
         frostedCooldownMap.put(uuid, frostedCooldownMap.get(uuid) + 20); //Increase cooldown by 20 ticks
         BukkitRunnable task = new BukkitRunnable() {
             int counter = 20;

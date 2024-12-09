@@ -2,12 +2,11 @@ package dijon.infuseRevampS2.EffectActions.Listeners;
 
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.ListenerHelpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +25,7 @@ public class RegenListener implements Listener {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e){
-        if(!ListenerHelpers.playerAndMob(e)) return;
+        if(!Helpers.playerAndMob(e)) return;
         if(!hasEffect(e.getDamager().getUniqueId())) return;
         if(sparked(e.getDamager().getUniqueId())) return;
         Player player = (Player) e.getDamager();
