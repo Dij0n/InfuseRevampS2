@@ -77,7 +77,7 @@ public final class InfuseRevampS2 extends JavaPlugin {
         this.getCommand("rspark").setExecutor(new rspark());
         this.getCommand("setcooldown").setExecutor(new setcooldown());
         this.getCommand("setduration").setExecutor(new setduration());
-        //this.getCommand("swap").setExecutor(new swap());
+        this.getCommand("swap").setExecutor(new swap());
         this.getCommand("trust").setExecutor(new trust());
         this.getCommand("trusted").setExecutor(new trusted());
         this.getCommand("resetcooldown").setExecutor(new resetcooldown());
