@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,7 +42,7 @@ public class SpeedListener implements Listener {
         if(attacker.getAttackCooldown() < 1) return;
         UUID uuid = e.getDamager().getUniqueId();
         speedLevelMap.put(uuid, speedLevelMap.getOrDefault(uuid, 0) + 1); //Increase Speed Level
-        if(speedLevelMap.get(uuid) > 7) speedLevelMap.put(uuid, 7);
+        if(speedLevelMap.get(uuid) > 6) speedLevelMap.put(uuid, 6);
         speedCooldownMap.putIfAbsent(uuid, 0); //Initialize Cooldown if not already initialized
         speedCooldownMap.put(uuid, speedCooldownMap.get(uuid) + 20); //Increase cooldown by 20 ticks
         BukkitRunnable task = new BukkitRunnable() {
@@ -60,12 +61,14 @@ public class SpeedListener implements Listener {
 
     @EventHandler
     public void onAttackInvFrames(EntityDamageByEntityEvent e){
-        if(!Helpers.bothPlayers(e)) return;
+        if(!Helpers.playerAndMob(e)) return;
         if(!hasEffect(e.getDamager().getUniqueId())) return;
-        Player attacker = (Player) e.getDamager();
-        Player victim = (Player) e.getEntity();
+        LivingEntity victim = (LivingEntity) e.getEntity();
+        Bukkit.getLogger().info(String.valueOf(victim.getNoDamageTicks()));
+        Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
+            victim.setNoDamageTicks(15);
+        }, 1);
 
-        victim.setNoDamageTicks(5);
 
     }
 

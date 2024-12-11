@@ -42,7 +42,7 @@ public class Whirlpool extends BukkitRunnable {
             if(trustedList.contains(entity.getUniqueId())) continue;
 
             Vector vecToEntity = location.clone().subtract(entity.getLocation()).toVector();
-            if(vecToEntity.length() <= 8) continue;
+            if(vecToEntity.length() <= 5) continue;
             double force = 10 / vecToEntity.lengthSquared();
             vecToEntity.normalize();
             vecToEntity.multiply(force);

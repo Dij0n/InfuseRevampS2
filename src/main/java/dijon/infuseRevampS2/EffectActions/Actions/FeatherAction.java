@@ -6,10 +6,7 @@ import dijon.infuseRevampS2.EffectActions.Listeners.FeatherListener;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import dijon.infuseRevampS2.InfuseRevampS2;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -75,8 +72,7 @@ public class FeatherAction extends InfuseAction {
                     if(v.getY() < 1) v.setY(1);
                     player.setVelocity(v);
 
-                    player.playSound(player.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1F, 1F);
-                    player.getWorld().spawnParticle(Particle.POOF, player.getLocation(), 3);
+                    player.getWorld().playSound(player.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1F, 1F);
                     groundPound(player);
                 }
             }
@@ -84,6 +80,7 @@ public class FeatherAction extends InfuseAction {
     }
 
     private void groundPound(Player player){
+        featherPoundParticles(player);
         for(Entity e : player.getNearbyEntities(5, 3, 5)){
             if(!(e instanceof LivingEntity livingEntity)) continue;
             if(e instanceof Villager) continue;
@@ -92,8 +89,27 @@ public class FeatherAction extends InfuseAction {
             Helpers.trueDamage(livingEntity, 6);
             livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 0));
             livingEntity.setVelocity(new Vector(0, 1, 0));
-
-
         }
+    }
+
+    public static void featherPoundParticles (Player p){
+        World world = p.getWorld();
+        double x;
+        double z;
+        double theta = 0;
+        int radius = 5;
+
+        while(theta <= Math.PI * 4){
+            x = Math.sin(theta) * radius;
+            z = Math.cos(theta) * radius;
+            int randomVal = (int) (Math.floor(Math.random() * 40) + 30);
+            Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(randomVal, randomVal, randomVal), 2);
+            Location circleLoc = new Location(world, p.getLocation().getX() + x, p.getLocation().getY(), p.getLocation().getZ() + z);
+            world.spawnParticle(Particle.POOF, circleLoc, 3);
+            theta += 0.5D;
+        }
+
+        world.spawnParticle(Particle.POOF, p.getLocation(), 3);
+
     }
 }

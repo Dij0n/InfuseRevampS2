@@ -53,6 +53,12 @@ public class PlayerDataManager {
     public static int getHitCount(UUID uuid){
         return masterPlayerDataList.get(uuid).getHitCount();
     }
+    public static long getLastPrimaryActivation(UUID uuid) {
+        return masterPlayerDataList.get(uuid).getLastPrimaryActivation();
+    }
+    public static long getLastSecondaryActivation(UUID uuid) {
+        return masterPlayerDataList.get(uuid).getLastSecondaryActivation();
+    }
 
     //SETTERS
     public static void setPrimary(UUID uuid, InfuseEffect infuseEffect){
@@ -67,7 +73,6 @@ public class PlayerDataManager {
     public static void setSecondaryActive(UUID uuid, boolean active){
         masterPlayerDataList.get(uuid).setSecondaryActivated(active);
     }
-
     public static void setLastPrimaryActivation(UUID uuid, long time){
         masterPlayerDataList.get(uuid).setLastPrimaryActivation(time);
     }

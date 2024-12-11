@@ -41,7 +41,7 @@ public class FrostListener implements Listener {
         if(e.getEntity() instanceof LivingEntity victim){
             if(e.getEntity().getType().equals(EntityType.ENDER_DRAGON) || e.getEntity().getType().equals(EntityType.WITHER) || e.getEntity().getType().equals(EntityType.ELDER_GUARDIAN)) return;
             victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200, 99));
-            return;
+            victim.setFreezeTicks(300);
         }
     }
 
@@ -61,6 +61,8 @@ public class FrostListener implements Listener {
         if(!sparked(e.getDamager().getUniqueId())) return;
         if(!(e.getEntity() instanceof Player player)) return;
 
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0));
         player.setFreezeTicks(340);
         UUID uuid = player.getUniqueId();
         frostedJumpValues.putIfAbsent(uuid , 0.45);
@@ -85,7 +87,10 @@ public class FrostListener implements Listener {
 
     @EventHandler
     public void onCreeperExplode(CreeperIgniteEvent e){
+        Bukkit.getLogger().info(e.getEntity().getActivePotionEffects().toString());
+        Bukkit.getLogger().info("REMOVING!!!!!!");
         e.getEntity().removePotionEffect(PotionEffectType.SLOWNESS);
+        Bukkit.getLogger().info(e.getEntity().getActivePotionEffects().toString());
     }
 
     //HELPERS

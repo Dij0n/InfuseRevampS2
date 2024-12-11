@@ -29,7 +29,7 @@ public class RegenListener implements Listener {
         if(!hasEffect(e.getDamager().getUniqueId())) return;
         if(sparked(e.getDamager().getUniqueId())) return;
         Player player = (Player) e.getDamager();
-        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 0));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 1));
     }
 
     @EventHandler

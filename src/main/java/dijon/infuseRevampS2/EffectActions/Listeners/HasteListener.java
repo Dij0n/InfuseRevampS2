@@ -3,18 +3,23 @@ package dijon.infuseRevampS2.EffectActions.Listeners;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.SmeltingValues;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import io.papermc.paper.event.player.PlayerShieldDisableEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -37,6 +42,7 @@ public class HasteListener implements Listener {
     @EventHandler
     public void onVeinMine(BlockBreakEvent e){
         if(!hasEffect(e.getPlayer().getUniqueId())) return;
+        boolean hasFireEffect = PlayerDataManager.hasEffect(e.getPlayer().getUniqueId(), InfuseEffect.FIRE);
         if(!e.getPlayer().isSneaking()) return;
         int boxSize = 4; //9 x 9 x 9 cube
         Material originalBlock = e.getBlock().getType();
@@ -46,7 +52,17 @@ public class HasteListener implements Listener {
                     for(int z = e.getBlock().getZ() - boxSize; z < e.getBlock().getZ() + boxSize + 1; z++){
                         Block block = e.getBlock().getWorld().getBlockAt(x, y, z);
                         if(originalBlock.equals(block.getType())){
-                            block.breakNaturally(e.getPlayer().getInventory().getItemInMainHand());
+                            for (ItemStack itemStack : block.getDrops(e.getPlayer().getInventory().getItemInMainHand())){
+                                if(hasFireEffect){
+                                    if(SmeltingValues.isSmeltable(itemStack.getType())){
+                                        itemStack.setType(SmeltingValues.getSmelted(itemStack.getType()));
+                                        e.getPlayer().getWorld().playSound(block.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 0.1f, 1);
+                                    }
+                                }
+                                e.getPlayer().getWorld().dropItemNaturally(block.getLocation(), itemStack);
+                            }
+
+                            block.breakNaturally(new ItemStack(Material.STICK));
                         }
                     }
                 }

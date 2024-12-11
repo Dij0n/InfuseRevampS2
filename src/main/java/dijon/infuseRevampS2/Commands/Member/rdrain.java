@@ -23,7 +23,11 @@ public class rdrain implements CommandExecutor {
             InfuseEffect effect = PlayerDataManager.getSecondary(uuid);
 
             if(effect.equals(InfuseEffect.NONE)) {
-                sender.sendMessage(ChatColor.RED + "Incorrect Usage: You have no effects equipped!");
+                if(PlayerDataManager.getPrimary(uuid).equals(InfuseEffect.NONE)){
+                    sender.sendMessage(ChatColor.RED + "Incorrect Usage: You have no effect equipped in this slot!");
+                    return true;
+                }
+                ldrain.unequipPrimarySlot(player, uuid, PlayerDataManager.getPrimary(uuid));
                 return true;
             }
 
@@ -54,10 +58,6 @@ public class rdrain implements CommandExecutor {
         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1F, 0.9F);
         effect.getAction().runUnequippedTask(player);
         PlayerDataManager.setSecondary(uuid, InfuseEffect.NONE);
-        if(!PlayerDataManager.getPrimary(uuid).equals(InfuseEffect.NONE)){
-            PlayerDataManager.setSecondary(uuid, PlayerDataManager.getPrimary(uuid));
-            PlayerDataManager.setPrimary(uuid, InfuseEffect.NONE);
-        }
     }
 
 }

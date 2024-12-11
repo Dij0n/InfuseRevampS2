@@ -7,10 +7,7 @@ import dijon.infuseRevampS2.EffectActions.Spawnables.Objects.Whirlpool;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -67,6 +64,7 @@ public class OceanAction extends InfuseAction {
                 for(Entity e : player.getNearbyEntities(5, 5, 5)){
 
                     if(e instanceof Villager) continue;
+
                     if(e instanceof Player opp){
 
                         if(PlayerDataManager.getTrustedList(player.getUniqueId()).contains(opp.getUniqueId())) continue;

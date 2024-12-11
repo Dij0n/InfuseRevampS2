@@ -3,11 +3,13 @@ package dijon.infuseRevampS2.EffectActions.Actions;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
+import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class EmeraldAction extends InfuseAction {
 
@@ -54,6 +56,7 @@ public class EmeraldAction extends InfuseAction {
             public void run() {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 30, 99));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE, 30, 99));
+                player.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, player.getLocation().add(new Vector(0, 1, 0)), 5);
             }
         };
     }

@@ -5,6 +5,7 @@ import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.Actions.NoneAction;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
@@ -22,10 +23,10 @@ public class HUDDisplayer extends BukkitRunnable {
     public Component getText(Player p){
         InfuseEffect primary = PlayerDataManager.getPrimary(p.getUniqueId());
         InfuseEffect secondary = PlayerDataManager.getSecondary(p.getUniqueId());
-        Component pTimeString = null;
-        Component pString;
-        Component sString;
-        Component sTimeString = null;
+        TextComponent pTimeString = null;
+        TextComponent pString;
+        TextComponent sString;
+        TextComponent sTimeString = null;
 
         //Cooldown Text
         if(!PlayerDataManager.isPrimaryCooldownOver(p.getUniqueId())){
@@ -37,10 +38,10 @@ public class HUDDisplayer extends BukkitRunnable {
 
         //Spark/Duration Text
         if(PlayerDataManager.isPrimaryActivated(p.getUniqueId())){
-            pString = Component.text(primary.getTextureSpark() + " ").color(TextColor.color(0xffffff)).decoration(TextDecoration.BOLD, false);
+            pString = Component.text(primary.getTextureSpark()).color(TextColor.color(0xffffff)).decoration(TextDecoration.BOLD, false);
             pTimeString = Component.text(toMinutes(PlayerDataManager.getPrimarySparkDurationLeft(p.getUniqueId())) + "  ").color(primary.getColor()).decorate(TextDecoration.BOLD);
         }else{
-            pString = Component.text(primary.getTexture() + " ").color(TextColor.color(0xffffff)).decoration(TextDecoration.BOLD, false);
+            pString = Component.text(primary.getTexture()).color(TextColor.color(0xffffff)).decoration(TextDecoration.BOLD, false);
         }
 
         if(PlayerDataManager.isSecondaryActivated(p.getUniqueId())){
@@ -55,7 +56,7 @@ public class HUDDisplayer extends BukkitRunnable {
             sTimeString = Component.text("       ");
         }
         if (sTimeString != null && pTimeString == null){
-            pTimeString = Component.text("      ");
+            pTimeString = Component.text("       ");
         }
 
         //Safety null checks
@@ -66,6 +67,9 @@ public class HUDDisplayer extends BukkitRunnable {
             sTimeString = Component.text("");
         }
 
+        if(!pString.content().isEmpty() && !sString.content().isEmpty()){
+            pString = pString.append(Component.text(" "));
+        }
 
         return pTimeString.append(pString).append(sString).append(sTimeString);
 

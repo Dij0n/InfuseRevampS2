@@ -7,6 +7,7 @@ import dijon.infuseRevampS2.EffectActions.Spawnables.Objects.HealthIndicator;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,11 +29,11 @@ public class HeartListener implements Listener {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e){
-        if(Helpers.bothPlayers(e)){
+        if(Helpers.playerAndMob(e)){
             if(!hasEffect(e.getDamager().getUniqueId())) return;
             int hitCount = PlayerDataManager.getHitCount(e.getDamager().getUniqueId());
             if(hitCount % 10 == 0){
-                HealthIndicator healthIndicator = new HealthIndicator((Player) e.getEntity(), 3, 10);
+                HealthIndicator healthIndicator = new HealthIndicator((LivingEntity) e.getEntity(), 3, 10);
                 indicatorHashMap.put(e.getEntity().getUniqueId(), healthIndicator);
             }
         }
@@ -41,8 +42,9 @@ public class HeartListener implements Listener {
     @EventHandler
     public void onEatApple(PlayerItemConsumeEvent e){
         if(e.getItem().getType().equals(Material.POTION)) return;
+        if(!hasEffect(e.getPlayer().getUniqueId())) return;
 
-        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 1));
+        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 0));
 
         if(e.getItem().getType().equals(Material.ENCHANTED_GOLDEN_APPLE) && hasEffect(e.getPlayer().getUniqueId())){
             e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 4));

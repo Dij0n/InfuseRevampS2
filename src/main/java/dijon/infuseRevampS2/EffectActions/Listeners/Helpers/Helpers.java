@@ -11,6 +11,8 @@ import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -32,6 +34,7 @@ public class Helpers {
     public static final Set<Material> bows = new HashSet<>();
     public static final Set<Material> veinMined = new HashSet<>();
     public static final Set<Material> boots = new HashSet<>();
+    public static final Set<EntityType> dontDrown = new HashSet<>();
 
     public static final Set<UUID> hiddenPlayers = new HashSet<>();
 
@@ -186,6 +189,9 @@ public class Helpers {
 
     public static boolean tenthHit(EntityDamageByEntityEvent e){
         if(!playerAndMob(e)) return false;
+        if(e.getDamager() instanceof Player attacker){
+            if(attacker.getAttackCooldown() < 1) return false;
+        }
         int hitCount = PlayerDataManager.getHitCount(e.getDamager().getUniqueId());
         return hitCount % 10 == 0;
     }
@@ -222,7 +228,7 @@ public class Helpers {
         hiddenPlayers.remove(player.getUniqueId());
     }
 
-    public static void trueDamage(LivingEntity victim, int damage){
+    public static void trueDamage(LivingEntity victim, double damage){
 
         if(victim.isDead()) return;
         victim.damage(0.1);

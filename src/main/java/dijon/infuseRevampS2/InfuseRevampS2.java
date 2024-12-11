@@ -13,7 +13,9 @@ import dijon.infuseRevampS2.EffectActions.InfuseEffect;
 import dijon.infuseRevampS2.EffectActions.Listeners.*;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.GenericListener;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
+import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.SmeltingValues;
 import dijon.infuseRevampS2.HUD.HUDDisplayer;
+import dijon.infuseRevampS2.ItemBehavior.DeathListener;
 import dijon.infuseRevampS2.ItemBehavior.DrinkListener;
 import dijon.infuseRevampS2.ItemBehavior.PotionItemStacks;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,12 +39,16 @@ public final class InfuseRevampS2 extends JavaPlugin {
         InfuseEffect.initializeEffects();
         PotionItemStacks.initializeLore();
         Helpers.initialize();
+        SmeltingValues.initialize();
 
         //Listeners
         new JoinDataListener();
         new DrinkListener();
+        new DeathListener();
 
         new GenericListener();
+
+
         new StrengthListener();
         new EmeraldListener();
         new HasteListener();
@@ -54,6 +60,7 @@ public final class InfuseRevampS2 extends JavaPlugin {
         new FeatherListener();
         new OceanListener();
         new ThunderListener();
+        new FireListener();
 
         //HUD
         new HUDDisplayer().runTaskTimer(this, 0, 2);
@@ -66,9 +73,10 @@ public final class InfuseRevampS2 extends JavaPlugin {
         this.getCommand("rspark").setExecutor(new rspark());
         this.getCommand("setcooldown").setExecutor(new setcooldown());
         this.getCommand("setduration").setExecutor(new setduration());
-        //this.getCommand("swap").setExecutor(new swap());
+        this.getCommand("swap").setExecutor(new swap());
         this.getCommand("trust").setExecutor(new trust());
         this.getCommand("trusted").setExecutor(new trusted());
+        this.getCommand("resetcooldown").setExecutor(new resetcooldown());
 
         this.getCommand("infusegive").setTabCompleter(new infusegivetabcomplete());
         this.getCommand("setcooldown").setTabCompleter(new infusegivetabcomplete());

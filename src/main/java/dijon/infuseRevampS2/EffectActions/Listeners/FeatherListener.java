@@ -43,7 +43,7 @@ public class FeatherListener implements Listener {
     public void featherMace(EntityDamageByEntityEvent e){
         if(!Helpers.playerAndMob(e)) return;
         if(hasEffect(e.getDamager().getUniqueId())){
-            if(e.getDamager().getFallDistance() > 10){
+            if(e.getDamager().getFallDistance() > 7){
                 e.setDamage(e.getDamage() * 1.5);
                 e.getDamager().getWorld().playSound(e.getDamager(), Sound.ITEM_MACE_SMASH_GROUND, 1f, 1f);
             }
@@ -74,10 +74,8 @@ public class FeatherListener implements Listener {
         if(!(e.getEntity() instanceof WindCharge windCharge)) return;
         if(hasEffect(player.getUniqueId())){
 
-            Vector velocity = windCharge.getVelocity();
-            velocity.subtract(player.getVelocity());
+            Vector velocity = player.getEyeLocation().getDirection().normalize().multiply(1.5);
             windCharge.setVelocity(velocity);
-
             windCharge.setAcceleration(windCharge.getAcceleration().multiply(2));
             Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
                 player.setCooldown(Material.WIND_CHARGE, 4);

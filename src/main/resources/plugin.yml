@@ -23,3 +23,5 @@ commands:
     usage: /trust
   trusted:
     usage: /trusted
+  resetcooldown:
+    usage: /resetcooldown

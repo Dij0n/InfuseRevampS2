@@ -31,7 +31,6 @@ public class lspark implements CommandExecutor {
                 rspark.onSecondaryActivateCommand(p);
                 return true;
             }
-
             onPrimaryActivateCommand(p);
             return true;
         }

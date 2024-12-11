@@ -6,6 +6,7 @@ import dijon.infuseRevampS2.EffectActions.Listeners.SpeedListener;
 import dijon.infuseRevampS2.EffectActions.Templates.InfuseAction;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
@@ -48,7 +49,7 @@ public class SpeedAction extends InfuseAction {
             int count = 0;
             @Override
             public void run() {
-                player.getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 3);
+                player.getWorld().spawnParticle(Particle.DUST, player.getLocation(), 3, 0.1, 0.1, 0.1, new Particle.DustOptions(Color.fromRGB(0xfcf7c0), 2));
                 count++;
                 if(count>20) cancel();
             }
@@ -67,10 +68,10 @@ public class SpeedAction extends InfuseAction {
             @Override
             public void run() {
                 if(SpeedListener.speedCooldownMap.getOrDefault(player.getUniqueId(), 0) > 0){
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, SpeedListener.speedLevelMap.get(player.getUniqueId())));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, SpeedListener.speedLevelMap.get(player.getUniqueId())));
                 }else{
                     SpeedListener.speedLevelMap.put(player.getUniqueId(), 0);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 0));
                 }
             }
         };

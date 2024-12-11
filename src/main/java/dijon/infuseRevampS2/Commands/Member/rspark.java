@@ -19,6 +19,13 @@ public class rspark implements CommandExecutor {
         if(commandSender instanceof Player p){
             if(strings.length != 0) return true;
             if(p.getGameMode().equals(GameMode.SPECTATOR)) return true;
+            if(PlayerDataManager.getSecondary(p.getUniqueId()).equals(InfuseEffect.NONE)) {
+                if(PlayerDataManager.getPrimary(p.getUniqueId()).equals(InfuseEffect.NONE)){
+                    return true;
+                }
+                lspark.onPrimaryActivateCommand(p);
+                return true;
+            }
             onSecondaryActivateCommand(p);
             return true;
         }

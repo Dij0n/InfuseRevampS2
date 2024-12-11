@@ -39,12 +39,19 @@ public abstract class InfuseAction {
         stopActiveRunnable(player.getUniqueId());
         onSparked(player);
         addSparkedRunnable(player.getUniqueId());
+        long lastSparkTimePrimary = PlayerDataManager.getLastPrimaryActivation(player.getUniqueId());
+        long lastSparkTimeSecondary = PlayerDataManager.getLastSecondaryActivation(player.getUniqueId());
         Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, () ->{
-            runSparkEndTask(player);
             if(isOnLeft){
-                PlayerDataManager.setPrimaryActive(player.getUniqueId(), false);
+                if(lastSparkTimePrimary == PlayerDataManager.getLastPrimaryActivation(player.getUniqueId())){
+                    PlayerDataManager.setPrimaryActive(player.getUniqueId(), false);
+                    runSparkEndTask(player);
+                }
             }else{
-                PlayerDataManager.setSecondaryActive(player.getUniqueId(), false);
+                if(lastSparkTimeSecondary == PlayerDataManager.getLastSecondaryActivation(player.getUniqueId())){
+                    PlayerDataManager.setSecondaryActive(player.getUniqueId(), false);
+                    runSparkEndTask(player);
+                }
             }
         }, this.effect.getSparkDuration() * 20L);
     }

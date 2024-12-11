@@ -16,34 +16,43 @@ import java.util.UUID;
 
 public class HealthIndicator extends BukkitRunnable {
 
-    Player player;
+    LivingEntity livingEntity;
     UUID uuid;
     int timeLimit;
     int counter = 0;
     TextDisplay textDisplay;
 
-    public HealthIndicator(Player player, int durationInSeconds, int frequency){
+    public HealthIndicator(LivingEntity livingEntity, int durationInSeconds, int frequency){
 
-        this.player = player;
-        this.uuid = player.getUniqueId();
+        this.livingEntity = livingEntity;
+        this.uuid = livingEntity.getUniqueId();
         timeLimit = durationInSeconds * frequency;
-        if(!player.getPassengers().isEmpty()) return;
+        if(!livingEntity.getPassengers().isEmpty()) return;
 
         Transformation transformation = new Transformation(new Vector3f(0,0.5f,0), new AxisAngle4f(0,0,0,0), new Vector3f(1.2f, 1.2f, 1.2f), new AxisAngle4f(0,0,0,0));
 
-        textDisplay = (TextDisplay) player.getWorld().spawnEntity(player.getLocation(), EntityType.TEXT_DISPLAY);
+        textDisplay = (TextDisplay) livingEntity.getWorld().spawnEntity(livingEntity.getLocation(), EntityType.TEXT_DISPLAY);
 
-        int healthDisplay = (int) player.getHealth();
+        int healthDisplay = (int) livingEntity.getHealth();
         double heathDisplayFull = (double) healthDisplay / 2;
         Component name = Component.text(heathDisplayFull).color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD);
         Component heart = Component.text(" ❤").color(TextColor.color(255, 47, 51)).decoration(TextDecoration.BOLD, false);
         textDisplay.text(name.append(heart));
+
+        if(livingEntity.getAbsorptionAmount() > 0){
+            int absorbDisplay = (int) livingEntity.getHealth();
+            double absorbDisplayFull = (double) absorbDisplay / 2;
+            Component nameAbsorb = Component.text(" " + absorbDisplayFull).color(TextColor.color(255, 238, 33)).decorate(TextDecoration.BOLD);
+            Component heartAbsorb = Component.text(" ❤").color(TextColor.color(255, 238, 33)).decoration(TextDecoration.BOLD, false);
+            textDisplay.text(name.append(heart.append(nameAbsorb.append(heartAbsorb))));
+        }
+
         textDisplay.setBackgroundColor(Color.fromARGB(0, 255, 47, 51));
         textDisplay.setBillboard(Display.Billboard.CENTER);
         textDisplay.setShadowed(true);
         textDisplay.setTransformation(transformation);
         textDisplay.setVisibleByDefault(true);
-        player.addPassenger(textDisplay);
+        livingEntity.addPassenger(textDisplay);
 
         runTaskTimer(InfuseRevampS2.instance, 0, 20 / frequency);
     }
@@ -51,14 +60,27 @@ public class HealthIndicator extends BukkitRunnable {
     @Override
     public void run() {
 
-        int healthDisplay = (int) player.getHealth();
+        if(livingEntity == null){
+            textDisplay.remove();
+            cancel();
+        }
+
+        int healthDisplay = (int) livingEntity.getHealth();
         double heathDisplayFull = (double) healthDisplay / 2;
         Component name = Component.text(heathDisplayFull).color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD);
         Component heart = Component.text(" ❤").color(TextColor.color(255, 47, 51)).decoration(TextDecoration.BOLD, false);
         textDisplay.text(name.append(heart));
 
+        if(livingEntity.getAbsorptionAmount() > 0){
+            int absorbDisplay = (int) livingEntity.getAbsorptionAmount();
+            double absorbDisplayFull = (double) absorbDisplay / 2;
+            Component nameAbsorb = Component.text(" " + absorbDisplayFull).color(TextColor.color(255, 238, 33)).decorate(TextDecoration.BOLD);
+            Component heartAbsorb = Component.text(" ❤").color(TextColor.color(255, 238, 33)).decoration(TextDecoration.BOLD, false);
+            textDisplay.text(name.append(heart.append(nameAbsorb.append(heartAbsorb))));
+        }
+
         counter++;
-        if(counter >= timeLimit || Bukkit.getPlayer(uuid) == null){
+        if(counter >= timeLimit || livingEntity.isDead()){
             textDisplay.remove();
             cancel();
         }

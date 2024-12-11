@@ -56,7 +56,7 @@ public class InvisAction extends InfuseAction {
         return new BukkitRunnable() {
             @Override
             public void run() {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 30, 0));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 40, 0));
             }
         };
     }
@@ -70,7 +70,6 @@ public class InvisAction extends InfuseAction {
                 Helpers.hidePlayer(player);
                 for(Entity e : player.getNearbyEntities(10, 4, 10)){
                     if(!(e instanceof Player victim)) continue;
-                    if(e.equals(player)) continue;
                     if(!PlayerDataManager.getTrustedList(player.getUniqueId()).contains(victim.getUniqueId())){
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 0));
                         victim.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20, 0));
