@@ -77,7 +77,7 @@ public class StrengthListener implements Listener {
         if(!sparked(e.getDamager().getUniqueId())) return;
 
         Player player = (Player) e.getDamager();
-        Player victim = (Player) e.getEntity();
+        LivingEntity victim = (LivingEntity) e.getEntity();
 
         if(e.isCritical()) return;
 

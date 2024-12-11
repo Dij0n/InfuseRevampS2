@@ -5,6 +5,7 @@ import dijon.infuseRevampS2.Commands.OP.infusegive;
 import dijon.infuseRevampS2.Commands.OP.infusegivetabcomplete;
 import dijon.infuseRevampS2.Commands.OP.setcooldown;
 import dijon.infuseRevampS2.Commands.OP.setduration;
+import dijon.infuseRevampS2.Crafting.CraftingMenuHandler;
 import dijon.infuseRevampS2.Data.CooldownFileManager;
 import dijon.infuseRevampS2.Data.JoinDataListener;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
@@ -14,6 +15,7 @@ import dijon.infuseRevampS2.EffectActions.Listeners.*;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.GenericListener;
 import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.Helpers;
 import dijon.infuseRevampS2.HUD.HUDDisplayer;
+import dijon.infuseRevampS2.HUD.PassiveParticles;
 import dijon.infuseRevampS2.ItemBehavior.DrinkListener;
 import dijon.infuseRevampS2.ItemBehavior.PotionItemStacks;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,6 +43,7 @@ public final class InfuseRevampS2 extends JavaPlugin {
         //Listeners
         new JoinDataListener();
         new DrinkListener();
+        new CraftingMenuHandler();
 
         new GenericListener();
         new StrengthListener();
@@ -55,8 +58,9 @@ public final class InfuseRevampS2 extends JavaPlugin {
         new OceanListener();
         new ThunderListener();
 
-        //HUD
+        //Runnables
         new HUDDisplayer().runTaskTimer(this, 0, 2);
+        new PassiveParticles().runTaskTimer(this, 0, 5);
 
         //Commands
         this.getCommand("infusegive").setExecutor(new infusegive());
