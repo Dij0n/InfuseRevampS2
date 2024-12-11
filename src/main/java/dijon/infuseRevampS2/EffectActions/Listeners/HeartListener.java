@@ -44,10 +44,10 @@ public class HeartListener implements Listener {
         if(e.getItem().getType().equals(Material.POTION)) return;
         if(!hasEffect(e.getPlayer().getUniqueId())) return;
 
-        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 0));
+        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 0, true));
 
         if(e.getItem().getType().equals(Material.ENCHANTED_GOLDEN_APPLE) && hasEffect(e.getPlayer().getUniqueId())){
-            e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 4));
+            e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 4, true));
         }
     }
 

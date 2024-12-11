@@ -67,7 +67,7 @@ public final class InfuseRevampS2 extends JavaPlugin {
 
         //Runnables
         new HUDDisplayer().runTaskTimer(this, 0, 2);
-        new PassiveParticles().runTaskTimer(this, 0, 5);
+        new PassiveParticles().runTaskTimer(this, 0, 8);
 
         //Commands
         this.getCommand("infusegive").setExecutor(new infusegive());

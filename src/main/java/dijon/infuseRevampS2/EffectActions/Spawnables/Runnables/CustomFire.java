@@ -43,7 +43,7 @@ public class CustomFire extends BukkitRunnable {
 
         if(timer % 20 == 0){
             Helpers.trueDamage(livingEntity, damage);
-            livingEntity.getWorld().playSound(livingEntity, Sound.BLOCK_FIRE_AMBIENT, 0.2f, 1);
+            livingEntity.getWorld().playSound(livingEntity, Sound.ENTITY_PLAYER_HURT_ON_FIRE, 0.5f, 1);
             damage += 0.5;
             if(damage > 4){
                 damage = 4;

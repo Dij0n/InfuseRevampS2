@@ -2,12 +2,15 @@ package dijon.infuseRevampS2.Commands.Member;
 
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
+import org.bukkit.Color;
 import org.bukkit.GameMode;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -42,7 +45,8 @@ public class rspark implements CommandExecutor {
 
         PlayerDataManager.setSecondaryActive(uuid, true);
         PlayerDataManager.setLastSecondaryActivation(uuid, System.currentTimeMillis());
-        p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1F, 2F);
+        p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1F, 2F);
+        p.spawnParticle(Particle.ENTITY_EFFECT, p.getLocation().add(new Vector(0, 1, 0)), 40, 0.5, 0.8, 0.5, 1, Color.fromRGB(PlayerDataManager.getSecondary(uuid).getRawColor()));
 
         PlayerDataManager.getSecondary(uuid).getAction().runSparkTask(p, false);
 

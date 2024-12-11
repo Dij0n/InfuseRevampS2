@@ -43,4 +43,8 @@ public class HeartAction extends InfuseAction {
     protected BukkitRunnable createSparkedInterim(Player player) {
         return null;
     }
+
+    public void heartVFX(Player player){
+
+    }
 }

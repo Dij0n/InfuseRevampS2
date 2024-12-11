@@ -33,19 +33,15 @@ public class HealthIndicator extends BukkitRunnable {
 
         textDisplay = (TextDisplay) livingEntity.getWorld().spawnEntity(livingEntity.getLocation(), EntityType.TEXT_DISPLAY);
 
-        int healthDisplay = (int) livingEntity.getHealth();
+        int healthDisplay = (int) (livingEntity.getHealth() + livingEntity.getAbsorptionAmount());
         double heathDisplayFull = (double) healthDisplay / 2;
         Component name = Component.text(heathDisplayFull).color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD);
         Component heart = Component.text(" ❤").color(TextColor.color(255, 47, 51)).decoration(TextDecoration.BOLD, false);
-        textDisplay.text(name.append(heart));
-
         if(livingEntity.getAbsorptionAmount() > 0){
-            int absorbDisplay = (int) livingEntity.getHealth();
-            double absorbDisplayFull = (double) absorbDisplay / 2;
-            Component nameAbsorb = Component.text(" " + absorbDisplayFull).color(TextColor.color(255, 238, 33)).decorate(TextDecoration.BOLD);
-            Component heartAbsorb = Component.text(" ❤").color(TextColor.color(255, 238, 33)).decoration(TextDecoration.BOLD, false);
-            textDisplay.text(name.append(heart.append(nameAbsorb.append(heartAbsorb))));
+            name = Component.text(heathDisplayFull).color(TextColor.color(255, 255, 0)).decorate(TextDecoration.BOLD);
+            heart = Component.text(" ❤").color(TextColor.color(255, 255, 0)).decoration(TextDecoration.BOLD, false);
         }
+        textDisplay.text(name.append(heart));
 
         textDisplay.setBackgroundColor(Color.fromARGB(0, 255, 47, 51));
         textDisplay.setBillboard(Display.Billboard.CENTER);
@@ -65,19 +61,15 @@ public class HealthIndicator extends BukkitRunnable {
             cancel();
         }
 
-        int healthDisplay = (int) livingEntity.getHealth();
+        int healthDisplay = (int) (livingEntity.getHealth() + livingEntity.getAbsorptionAmount());
         double heathDisplayFull = (double) healthDisplay / 2;
         Component name = Component.text(heathDisplayFull).color(TextColor.color(255, 47, 51)).decorate(TextDecoration.BOLD);
         Component heart = Component.text(" ❤").color(TextColor.color(255, 47, 51)).decoration(TextDecoration.BOLD, false);
-        textDisplay.text(name.append(heart));
-
-        if(livingEntity.getAbsorptionAmount() > 0){
-            int absorbDisplay = (int) livingEntity.getAbsorptionAmount();
-            double absorbDisplayFull = (double) absorbDisplay / 2;
-            Component nameAbsorb = Component.text(" " + absorbDisplayFull).color(TextColor.color(255, 238, 33)).decorate(TextDecoration.BOLD);
-            Component heartAbsorb = Component.text(" ❤").color(TextColor.color(255, 238, 33)).decoration(TextDecoration.BOLD, false);
-            textDisplay.text(name.append(heart.append(nameAbsorb.append(heartAbsorb))));
+        if(livingEntity.getAbsorptionAmount() > 0 && healthDisplay != 10){
+            name = Component.text(heathDisplayFull).color(TextColor.color(255, 255, 0)).decorate(TextDecoration.BOLD);
+            heart = Component.text(" ❤").color(TextColor.color(255, 255, 0)).decoration(TextDecoration.BOLD, false);
         }
+        textDisplay.text(name.append(heart));
 
         counter++;
         if(counter >= timeLimit || livingEntity.isDead()){

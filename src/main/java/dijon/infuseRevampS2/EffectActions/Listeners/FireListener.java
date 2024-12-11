@@ -7,6 +7,7 @@ import dijon.infuseRevampS2.EffectActions.Listeners.Helpers.SmeltingValues;
 import dijon.infuseRevampS2.EffectActions.Spawnables.Runnables.CustomFire;
 import dijon.infuseRevampS2.InfuseRevampS2;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -16,10 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -51,8 +49,9 @@ public class FireListener implements Listener {
         if(!hasEffect(e.getPlayer().getUniqueId())) return;
 
         ItemStack pickaxe = e.getPlayer().getInventory().getItemInMainHand();
+        if(pickaxe.getItemMeta() == null) return;
         if(pickaxe.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH)) return;
-        
+
         for(Item item : e.getItems()){
             if(SmeltingValues.isSmeltable(item.getItemStack().getType())){
                 ItemStack itemStack = item.getItemStack();

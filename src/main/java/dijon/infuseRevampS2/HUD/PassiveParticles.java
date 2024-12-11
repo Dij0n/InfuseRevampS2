@@ -8,23 +8,25 @@ import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class PassiveParticles extends BukkitRunnable {
     @Override
     public void run() {
         for(Player player : Bukkit.getOnlinePlayers()){
+            if(PlayerDataManager.hasEffect(player.getUniqueId(), InfuseEffect.INVIS)) continue;
             spawnParticles(player, PlayerDataManager.getPrimary(player.getUniqueId()));
             spawnParticles(player, PlayerDataManager.getSecondary(player.getUniqueId()));
         }
     }
 
-
     public void spawnParticles(Player player, InfuseEffect effect){
         if(effect == InfuseEffect.NONE) return;
+        if(effect == InfuseEffect.ENDER) return;
 
         Color color = Color.fromRGB(effect.getRawColor());
 
-        player.spawnParticle(Particle.ENTITY_EFFECT, player.getLocation(), 1, 0.2, 0.2, 0.2, 1, color);
+        player.spawnParticle(Particle.ENTITY_EFFECT, player.getLocation().add(new Vector(0, 1, 0)), 1, 0.1, 0.4, 0.1, 0.1, color);
     }
 
 }

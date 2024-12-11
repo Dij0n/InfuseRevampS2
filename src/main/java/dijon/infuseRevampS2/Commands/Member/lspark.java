@@ -3,9 +3,7 @@ package dijon.infuseRevampS2.Commands.Member;
 import dijon.infuseRevampS2.Data.PlayerData;
 import dijon.infuseRevampS2.Data.PlayerDataManager;
 import dijon.infuseRevampS2.EffectActions.InfuseEffect;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -47,7 +45,9 @@ public class lspark implements CommandExecutor {
 
         PlayerDataManager.setPrimaryActive(uuid, true);
         PlayerDataManager.setLastPrimaryActivation(uuid, System.currentTimeMillis());
-        p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1F, 2F);
+        p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1F, 2F);
+        p.spawnParticle(Particle.ENTITY_EFFECT, p.getLocation().add(new Vector(0, 1, 0)), 40, 0.5, 0.8, 0.5, 1, Color.fromRGB(PlayerDataManager.getPrimary(uuid).getRawColor()));
+
 
         PlayerDataManager.getPrimary(uuid).getAction().runSparkTask(p, true);
 

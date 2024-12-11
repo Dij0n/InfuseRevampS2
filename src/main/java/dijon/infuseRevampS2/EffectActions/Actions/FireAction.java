@@ -54,6 +54,9 @@ public class FireAction extends InfuseAction {
         return new BukkitRunnable() {
             @Override
             public void run() {
+                if(player.getFireTicks() > 0){
+                    clearAllWater(player, 1);
+                }
                 genericRunnable(player);
             }
         };
@@ -69,7 +72,7 @@ public class FireAction extends InfuseAction {
             @Override
             public void run() {
                 genericRunnable(player);
-                clearAllWater(player);
+                clearAllWater(player, 5);
                 player.setFireTicks(10);
                 for(Entity e : player.getNearbyEntities(7, 7,7)){
                     if(!(e instanceof LivingEntity livingEntity)) continue;
@@ -119,10 +122,10 @@ public class FireAction extends InfuseAction {
         }
     }
 
-    public void clearAllWater(Player player){
-        for(int x = player.getLocation().getBlockX() - 5; x < player.getLocation().getBlockX() + 6; x++){
-            for(int y = player.getLocation().getBlockY() - 5; y < player.getLocation().getBlockY() + 6; y++){
-                for(int z = player.getLocation().getBlockZ() - 5; z < player.getLocation().getBlockZ() + 6; z++){
+    public void clearAllWater(Player player, int radius){
+        for(int x = player.getLocation().getBlockX() - radius; x < player.getLocation().getBlockX() + radius + 1; x++){
+            for(int y = player.getLocation().getBlockY() - radius; y < player.getLocation().getBlockY() + radius + 1; y++){
+                for(int z = player.getLocation().getBlockZ() - radius; z < player.getLocation().getBlockZ() + radius + 1; z++){
                     Block block = player.getWorld().getBlockAt(new Location(player.getWorld(), x, y, z));
                     if(block.getType().equals(Material.WATER) || block.getType().equals(Material.POWDER_SNOW)){
                         block.setType(Material.AIR);

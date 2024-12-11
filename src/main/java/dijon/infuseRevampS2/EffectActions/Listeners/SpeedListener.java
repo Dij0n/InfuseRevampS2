@@ -42,7 +42,7 @@ public class SpeedListener implements Listener {
         if(attacker.getAttackCooldown() < 1) return;
         UUID uuid = e.getDamager().getUniqueId();
         speedLevelMap.put(uuid, speedLevelMap.getOrDefault(uuid, 0) + 1); //Increase Speed Level
-        if(speedLevelMap.get(uuid) > 6) speedLevelMap.put(uuid, 6);
+        if(speedLevelMap.get(uuid) > 4) speedLevelMap.put(uuid, 4);
         speedCooldownMap.putIfAbsent(uuid, 0); //Initialize Cooldown if not already initialized
         speedCooldownMap.put(uuid, speedCooldownMap.get(uuid) + 20); //Increase cooldown by 20 ticks
         BukkitRunnable task = new BukkitRunnable() {
@@ -63,11 +63,17 @@ public class SpeedListener implements Listener {
     public void onAttackInvFrames(EntityDamageByEntityEvent e){
         if(!Helpers.playerAndMob(e)) return;
         if(!hasEffect(e.getDamager().getUniqueId())) return;
-        LivingEntity victim = (LivingEntity) e.getEntity();
-        Bukkit.getLogger().info(String.valueOf(victim.getNoDamageTicks()));
-        Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
-            victim.setNoDamageTicks(15);
-        }, 1);
+        if(e.getEntity() instanceof Player victim){
+            Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
+                victim.setNoDamageTicks(2);
+            }, 1);
+        }else if(e.getEntity() instanceof LivingEntity livingEntity){
+            Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
+                livingEntity.setNoDamageTicks(15);
+            }, 1);
+        }
+
+
 
 
     }

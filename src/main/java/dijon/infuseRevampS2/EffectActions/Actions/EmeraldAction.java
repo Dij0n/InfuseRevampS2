@@ -56,7 +56,6 @@ public class EmeraldAction extends InfuseAction {
             public void run() {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 30, 99));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE, 30, 99));
-                player.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, player.getLocation().add(new Vector(0, 1, 0)), 5);
             }
         };
     }

@@ -61,7 +61,7 @@ public class ThunderSpark extends BukkitRunnable {
             }
             runCount++;
         }
-        if(timer % (interval / 2) == 0){
+        if(timer % (interval / 4) == 0){
             thunderParticles(player);
         }
         timer++;
@@ -79,10 +79,10 @@ public class ThunderSpark extends BukkitRunnable {
             x = Math.sin(theta) * radius;
             z = Math.cos(theta) * radius;
             int randomVal = (int) (Math.floor(Math.random() * 4));
-            Particle.DustOptions dustOptions1 = new Particle.DustOptions(Color.fromRGB(255, 231, 25), 3);
-            Particle.DustOptions dustOptions2 = new Particle.DustOptions(Color.fromRGB(255, 225, 25), 2);
-            Particle.DustOptions dustOptions3 = new Particle.DustOptions(Color.fromRGB(171, 171, 171), 2);
-            Particle.DustOptions dustOptions4 = new Particle.DustOptions(Color.fromRGB(53, 53, 53), 2);
+            Particle.DustOptions dustOptions1 = new Particle.DustOptions(Color.fromRGB(255, 231, 25), 1);
+            Particle.DustOptions dustOptions2 = new Particle.DustOptions(Color.fromRGB(255, 225, 25), 1);
+            Particle.DustOptions dustOptions3 = new Particle.DustOptions(Color.fromRGB(171, 171, 171), 1);
+            Particle.DustOptions dustOptions4 = new Particle.DustOptions(Color.fromRGB(53, 53, 53), 1);
             ArrayList<Particle.DustOptions> imtired = new ArrayList<>();
             imtired.add(dustOptions1);
             imtired.add(dustOptions2);

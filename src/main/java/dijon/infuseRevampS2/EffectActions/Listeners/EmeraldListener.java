@@ -64,7 +64,7 @@ public class EmeraldListener implements Listener {
             p.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             ItemStack lykainosTheDestroyer = e.getItem().clone();
             lykainosTheDestroyer.setAmount(1);
-            p.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, p.getLocation().add(0, 1, 0), 10, 0.25, 0.25, 0.25);
+            p.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, p.getLocation().add(0, 1, 0), 20, 0.25, 0.25, 0.25);
             Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
                 e.getPlayer().getInventory().addItem(lykainosTheDestroyer);
             }, 1);
@@ -79,6 +79,7 @@ public class EmeraldListener implements Listener {
             p.playSound(p, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10, 1);
             ItemStack lykainosTheDestroyer = e.getItemStack().clone();
             lykainosTheDestroyer.setAmount(1);
+            p.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, p.getLocation().add(0, 1, 0), 20, 0.25, 0.25, 0.25);
             Bukkit.getScheduler().runTaskLater(InfuseRevampS2.instance, ()->{
                 e.getPlayer().getInventory().addItem(lykainosTheDestroyer);
             }, 1);
